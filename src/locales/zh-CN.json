@@ -1,0 +1,59 @@
+{
+  "app": {
+    "name": "Tauri Template",
+    "tagline": "一套可以直接开工的桌面应用底座"
+  },
+  "nav": {
+    "home": "概览",
+    "tasks": "任务",
+    "settings": "设置"
+  },
+  "common": {
+    "add": "新建",
+    "delete": "删除",
+    "version": "版本",
+    "search": "搜索",
+    "cancel": "取消",
+    "confirm": "确定"
+  },
+  "home": {
+    "title": "概览",
+    "subtitle": "当前模板已就绪的基础能力",
+    "runtime": "运行环境",
+    "runtimeDesktop": "桌面端（Tauri）",
+    "runtimeBrowser": "浏览器（开发模式）",
+    "stack": "技术栈",
+    "next": "下一阶段",
+    "nextItems": {
+      "system": "托盘、通知、开机自启、单实例",
+      "update": "自动更新与签名发布",
+      "job": "后台任务引擎与进度推送"
+    }
+  },
+  "tasks": {
+    "title": "任务",
+    "subtitle": "演示列表、空状态与本地状态管理",
+    "placeholder": "输入任务后回车",
+    "empty": {
+      "title": "还没有任务",
+      "description": "在上方输入框写一条任务，回车即可创建第一条。"
+    },
+    "count": "共 {{count}} 条",
+    "remaining": "未完成 {{count}} 条"
+  },
+  "settings": {
+    "title": "设置",
+    "subtitle": "设置统一存放在一处，后续可平滑迁移到本地文件",
+    "appearance": "外观",
+    "appearanceHint": "浅色 / 深色 / 跟随系统",
+    "theme": {
+      "light": "浅色",
+      "dark": "深色",
+      "system": "跟随系统"
+    },
+    "language": "语言",
+    "languageHint": "界面语言，中英文同步切换",
+    "about": "关于",
+    "aboutHint": "模板版本与标识"
+  }
+}

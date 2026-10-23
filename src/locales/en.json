@@ -1,0 +1,59 @@
+{
+  "app": {
+    "name": "Tauri Template",
+    "tagline": "A desktop base you can start shipping on"
+  },
+  "nav": {
+    "home": "Overview",
+    "tasks": "Tasks",
+    "settings": "Settings"
+  },
+  "common": {
+    "add": "New",
+    "delete": "Delete",
+    "version": "Version",
+    "search": "Search",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "home": {
+    "title": "Overview",
+    "subtitle": "What this template already ships with",
+    "runtime": "Runtime",
+    "runtimeDesktop": "Desktop (Tauri)",
+    "runtimeBrowser": "Browser (dev mode)",
+    "stack": "Stack",
+    "next": "Next up",
+    "nextItems": {
+      "system": "Tray, notifications, autostart, single instance",
+      "update": "Auto update and signed releases",
+      "job": "Background job engine with progress streaming"
+    }
+  },
+  "tasks": {
+    "title": "Tasks",
+    "subtitle": "A demo of lists, empty states and local state",
+    "placeholder": "Type a task and press Enter",
+    "empty": {
+      "title": "No tasks yet",
+      "description": "Type a task above and press Enter to create the first one."
+    },
+    "count": "{{count}} total",
+    "remaining": "{{count}} open"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "All settings live in one store and can move to disk later",
+    "appearance": "Appearance",
+    "appearanceHint": "Light / dark / follow system",
+    "theme": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": "Language",
+    "languageHint": "UI language, applied across the app",
+    "about": "About",
+    "aboutHint": "Template version and identity"
+  }
+}

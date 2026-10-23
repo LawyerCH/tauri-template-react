@@ -1,0 +1,23 @@
+:root {
+  --c-bg: #f6f6f5;
+  --c-paper: #ffffff;
+  --c-ink: #1a1a1a;
+  --c-ink-2: #5c5c5c;
+  --c-ink-3: #8a8a8a;
+  --c-line: #e4e4e2;
+  --c-accent: #b3261e;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --c-bg: #0d0d0d;
+  --c-paper: #141414;
+  --c-ink: #ededeb;
+  --c-ink-2: #a3a3a0;
+  --c-ink-3: #6e6e6b;
+  --c-line: #2a2a28;
+  --c-accent: #e2574c;
+
+  color-scheme: dark;
+}
