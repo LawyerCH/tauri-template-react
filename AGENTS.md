@@ -2,6 +2,17 @@
 
 > 本文件是本项目唯一的 AI 入口。`CLAUDE.md` 等工具专用文件都软链到这里，只维护这一份。
 
+## 两层规范的分工
+
+| 层 | 位置 | 管什么 |
+|---|---|---|
+| 全局 | rulesync 分发：`~/.copilot/copilot-instructions.md`、`~/.claude/CLAUDE.md`、`~/.config/opencode/AGENTS.md`、`~/.trae-cn/user_rules/` | 环境纪律、工作流、界面设计门、终端命令安全、MCP 预算 |
+| 项目 | 本文件 + `docs/` + `.github/instructions/` | 这个仓库怎么改：分层、命令、验收、边界 |
+
+- 全局管"怎么做事"，项目管"这个仓库怎么改"
+- 同一件事两边都写了，**按更严格的一条执行**，不要各听一半
+- 路径级约定（`src/` 前端、`src-tauri/` Rust、`docs/` 文档）放在 `.github/instructions/`，命中对应文件时自动生效
+
 ## 这是什么
 
 可直接开工的桌面应用模板：Tauri 2 + React 19 + Vite 8 + Tailwind CSS 4。
@@ -31,14 +42,11 @@
 
 ## 工作流（六步）
 
-1. **理解**：搞清楚谁用、什么时候用、失败会怎样。意图不明先归类再问，不猜。→ `.agents/skills/intent-spec/SKILL.md`
-2. **定规格**：写成 `specs/NNNN-<name>.md`，验收标准必须可执行。
-3. **拆任务**：按层拆（类型 → 逻辑 → UI → 测试），每步可独立验证。
-4. **实现**：先读目标文件与相邻测试，再复用现有模式；不预测未来需求。
-5. **验证**：`pnpm check`；涉及 Rust 加 `pnpm check:rust`；涉及 UI 用浏览器实测并截图。
-6. **交付**：自查 → 提交 → 推送。→ `.agents/skills/release-check/SKILL.md`
+理解 → 定规格（`specs/NNNN-*.md`，验收可执行）→ 按层拆（类型 → 逻辑 → UI → 测试）→ 实现 → 验证 → 交付。
 
-每步的退出条件不满足，不进入下一步。细则见 `docs/workflow.md`。
+- 每步退出条件不满足，不进入下一步
+- 细则与各步产出见 `docs/workflow.md`
+- 意图不明先归类再问，不猜
 
 ## 任务路由
 
@@ -75,6 +83,7 @@
 | `docs/tech-notes.md` | 碰到 Tauri/主题/多语言/i18n 的坑 |
 | `docs/design.md` | 改视觉时同步更新 |
 | `specs/` | 当前任务对应的规格 |
+| `.github/instructions/` | 改 `src/`、`src-tauri/`、`docs/` 时自动命中，无需手动读 |
 | `src/lib/settings/store.ts` | 需要新增用户偏好时 |
 
 ## 完成定义（DoD）
