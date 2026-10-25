@@ -115,6 +115,10 @@
     "desktopOnly": "Desktop only",
     "about": "About",
     "aboutHint": "Template version and identity",
-    "aboutUi": "UI layer"
+    "aboutUi": "UI layer",
+    "autostartOn": "On: the app will start in the background after you sign in",
+    "autostartOff": "Off",
+    "notifyHint": "The call was made. If no banner appears, macOS notifications for this app are probably set to None.",
+    "openNotifySettings": "Open notification settings"
   }
 }

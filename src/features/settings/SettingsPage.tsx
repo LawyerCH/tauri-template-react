@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isEnabled as isAutoStartEnabled, enable, disable } from "@tauri-apps/plugin-autostart";
+import { openUrl } from "@tauri-apps/plugin-opener";
 import { AnimatedTabs } from "@/components/velora/animated-tabs";
 import { RadioGroup } from "@/components/ui/RadioGroup";
 import { Toggle } from "@/components/ui/Toggle";
@@ -33,7 +34,9 @@ export function SettingsPage() {
   const setAutoStart = useSettings((state) => state.setAutoStart);
 
   const [notifyResult, setNotifyResult] = useState<NotifyResult | null>(null);
-  const [autoStartFailed, setAutoStartFailed] = useState(false);
+  const [autoStartNote, setAutoStartNote] = useState<{ kind: "ok" | "error"; text: string } | null>(
+    null,
+  );
   const desktop = isTauri();
 
   const themeOptions = THEME_MODES.map((mode) => ({ value: mode, label: t(`settings.theme.${mode}`) }));
@@ -44,24 +47,29 @@ export function SettingsPage() {
     let active = true;
     isAutoStartEnabled()
       .then((enabled) => {
-        if (active) setAutoStart(enabled);
+        if (!active) return;
+        setAutoStart(enabled);
+        setAutoStartNote(enabled ? { kind: "ok", text: t("settings.autostartOn") } : null);
       })
-      .catch(() => {
-        if (active) setAutoStartFailed(true);
+      .catch((error: unknown) => {
+        if (active) {
+          setAutoStartNote({ kind: "error", text: `${t("settings.autoStartFailed")}: ${String(error)}` });
+        }
       });
     return () => {
       active = false;
     };
-  }, [desktop, setAutoStart]);
+  }, [desktop, setAutoStart, t]);
 
   async function handleAutoStartChange(next: boolean) {
     setAutoStart(next);
-    setAutoStartFailed(false);
+    setAutoStartNote({ kind: "ok", text: t(next ? "settings.autostartOn" : "settings.autostartOff") });
     try {
       await (next ? enable() : disable());
-    } catch {
+      setAutoStart(await isAutoStartEnabled());
+    } catch (error) {
       setAutoStart(!next);
-      setAutoStartFailed(true);
+      setAutoStartNote({ kind: "error", text: `${t("settings.autoStartFailed")}: ${String(error)}` });
     }
   }
 
@@ -69,6 +77,12 @@ export function SettingsPage() {
     const result = await notify(t("settings.notifyTitle"), t("settings.notifyBody"));
     setNotifyResult(result);
   }
+
+  const openSystemNotificationSettings = () => {
+    void openUrl("x-apple.systempreferences:com.apple.Notifications-Settings.extension").catch(() => {
+      void openUrl("x-apple.systempreferences:com.apple.preference.notifications").catch(() => {});
+    });
+  };
 
   const notifyMessage =
     notifyResult === "sent"
@@ -103,7 +117,19 @@ export function SettingsPage() {
           {notifyMessage && (
             <p className="mt-2 text-xs text-brand-via" role="status" aria-live="polite">
               {notifyMessage}
+              {(notifyResult === "sent" || notifyResult === "denied") && (
+                <button
+                  type="button"
+                  onClick={openSystemNotificationSettings}
+                  className="ml-2 cursor-pointer text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
+                >
+                  {t("settings.openNotifySettings")}
+                </button>
+              )}
             </p>
+          )}
+          {notifyResult === "sent" && (
+            <p className="mt-1 text-xs text-muted-foreground">{t("settings.notifyHint")}</p>
           )}
         </div>
         <div className="flex shrink-0 items-center gap-3">
@@ -123,9 +149,13 @@ export function SettingsPage() {
         <div className="min-w-0">
           <p className="text-sm font-medium">{t("settings.autoStart")}</p>
           <p className="mt-1 text-xs text-muted-foreground">{t("settings.autoStartHint")}</p>
-          {autoStartFailed && (
-            <p className="mt-2 text-xs text-destructive" role="status" aria-live="polite">
-              {t("settings.autoStartFailed")}
+          {autoStartNote && (
+            <p
+              className={`mt-2 text-xs ${autoStartNote.kind === "ok" ? "text-brand-via" : "text-destructive"}`}
+              role="status"
+              aria-live="polite"
+            >
+              {autoStartNote.text}
             </p>
           )}
         </div>

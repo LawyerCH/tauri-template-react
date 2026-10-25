@@ -8,6 +8,7 @@ use tauri::{
 };
 use tauri_plugin_autostart::MacosLauncher;
 use tauri_plugin_log::log;
+use tauri_plugin_window_state::{AppHandleExt, WindowExt};
 
 const TRAY_ID: &str = "main-tray";
 const LOCALE_ZH: &str = include_str!("../../src/locales/zh-CN.json");
@@ -115,7 +116,7 @@ pub fn run() {
             let menu = tray_menu(app.handle(), current_lang())?;
             let mut builder = TrayIconBuilder::with_id(TRAY_ID)
                 .menu(&menu)
-                .show_menu_on_left_click(false)
+                .show_menu_on_left_click(true)
                 .icon_as_template(cfg!(target_os = "macos"))
                 .tooltip("Tauri Template")
                 .on_menu_event(|app, event| match event.id().as_ref() {
@@ -143,11 +144,19 @@ pub fn run() {
             }
 
             builder.build(app)?;
+            // 恢复上次窗口状态（位置/大小）；无状态文件时静默回退默认
+            if let Some(window) = app.get_webview_window("main") {
+                let _ = window.restore_state(tauri_plugin_window_state::StateFlags::all());
+            }
             log::info!("app started, tray ready");
             Ok(())
         })
         .on_window_event(|window, event| {
             if let WindowEvent::CloseRequested { api, .. } = event {
+                // 关闭前保存窗口状态，供下次启动恢复
+                let _ = window
+                    .app_handle()
+                    .save_window_state(tauri_plugin_window_state::StateFlags::all());
                 api.prevent_close();
                 let _ = window.hide();
             }

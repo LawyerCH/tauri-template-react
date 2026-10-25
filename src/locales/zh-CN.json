@@ -115,6 +115,10 @@
     "desktopOnly": "仅桌面端可用",
     "about": "关于",
     "aboutHint": "模板版本与标识",
-    "aboutUi": "界面层"
+    "aboutUi": "界面层",
+    "autostartOn": "已开启：登录系统后会自动在后台启动",
+    "autostartOff": "已关闭",
+    "notifyHint": "调用已发出。若没看到横幅，多半是 macOS 通知里把这个应用设成了「无」。",
+    "openNotifySettings": "打开系统通知设置"
   }
 }
