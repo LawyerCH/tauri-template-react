@@ -4,15 +4,22 @@ description: 文档与规格写作约定
 ---
 # 文档约定
 
-## 规格（specs/）
-- 命名 `specs/NNNN-<name>.md`，模板见 `specs/_template.md`
-- 验收标准必须可执行、可演示；不写"体验更好"这类无法判定的描述
-- 需求里必须包含"失败时怎么办"
+## 规格（openspec/）
+
+需求由 **OpenSpec** 管理，手写 `specs/NNNN-*.md` 已废止。详见 `docs/openspec.md`。
+
+- 目录：`openspec/specs/` 是能力累积态，`openspec/changes/<name>/` 是进行中的变更
+- 每条 Requirement 至少一个 Scenario，写成 `WHEN … THEN …`，必须能当场演示
+- 规则里必须含「失败时怎么办」的分支
+- `specs/` 用现在时（系统必须满足什么），`changes/` 写计划与任务
+- 完成后 `/opsx-archive`，否则 `changes/` 会堆积
+- 校验用 `openspec validate --all`（不带参数会进交互）
 
 ## 文档（docs/）
 | 文件 | 职责 |
 |---|---|
 | `workflow.md` | 六步流程与退出条件 |
+| `openspec.md` | OpenSpec 命令、规格格式、何时必须走 |
 | `architecture.md` | 分层、依赖方向、新东西放哪 |
 | `ui.md` | 视觉与交互规则 |
 | `quality.md` | 自查、提交、发版 |
