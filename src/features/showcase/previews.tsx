@@ -21,6 +21,9 @@ import { Terminal } from "@template/velora/velora/terminal";
  * 预览实例：参数取最小可用值。
  * 重型组件（globe / world-map / macbook-scroll 等）不放预览，
  * 它们的 canvas 与滚动逻辑会让网格卡住。
+ *
+ * 预览内的示例文案统一用英文短词，和上游示例保持一致，
+ * 不参与中英双语切换（属于演示内容，不是界面文案）。
  */
 export const PREVIEWS: Record<string, () => ReactElement> = {
   "aurora-background": () => (
@@ -42,19 +45,19 @@ export const PREVIEWS: Record<string, () => ReactElement> = {
   ),
 
   "animated-gradient-text": () => (
-    <div className="grid size-full place-items-center text-base font-medium">
+    <div className="grid size-full place-items-center px-3 text-base font-medium">
       <AnimatedGradientText>Ship faster</AnimatedGradientText>
     </div>
   ),
 
   "text-shimmer": () => (
-    <div className="grid size-full place-items-center">
+    <div className="grid size-full place-items-center px-3">
       <TextShimmer className="text-xs">Thinking…</TextShimmer>
     </div>
   ),
 
   "flip-words": () => (
-    <div className="grid size-full place-items-center text-xs text-muted-foreground">
+    <div className="grid size-full place-items-center px-3 text-xs text-muted-foreground">
       <FlipWords words={["Desktop", "Web", "Teams", "CLI"]} />
     </div>
   ),
@@ -78,8 +81,8 @@ export const PREVIEWS: Record<string, () => ReactElement> = {
   ),
 
   "spotlight-card": () => (
-    <SpotlightCard className="grid size-full place-items-center rounded-lg border bg-card text-[11px] text-muted-foreground">
-      移动指针看光斑
+    <SpotlightCard className="grid size-full place-items-center rounded-md border bg-card text-[11px] text-muted-foreground">
+      Hover me
     </SpotlightCard>
   ),
 
@@ -109,13 +112,13 @@ export const PREVIEWS: Record<string, () => ReactElement> = {
 
   "blur-fade": () => (
     <div className="grid size-full place-items-center text-[11px] text-muted-foreground">
-      <BlurFade>淡入 + 模糊</BlurFade>
+      <BlurFade>Fade in</BlurFade>
     </div>
   ),
 
   "border-beam": () => (
-    <div className="relative grid size-full place-items-center border bg-card text-[11px] text-muted-foreground">
-      边框光束
+    <div className="relative grid size-full place-items-center rounded-md border bg-card text-[11px] text-muted-foreground">
+      Beam
       <BorderBeam size={50} duration={6} />
     </div>
   ),
@@ -126,7 +129,7 @@ export const PREVIEWS: Record<string, () => ReactElement> = {
         title="demo"
         speed={40}
         lines={["$ pnpm dev", "  ready in 240 ms"]}
-        className="h-full text-[10px]"
+        className="h-full rounded-none border-0 text-[10px] shadow-none"
       />
     </div>
   ),
