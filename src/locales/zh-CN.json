@@ -3,7 +3,13 @@
     "name": "Tauri Template",
     "tagline": "一套可以直接开工的桌面应用底座"
   },
+  "tray": {
+    "show": "显示主窗口",
+    "settings": "设置",
+    "quit": "退出"
+  },
   "nav": {
+    "label": "主导航",
     "home": "概览",
     "tasks": "任务",
     "settings": "设置"
@@ -14,7 +20,8 @@
     "version": "版本",
     "search": "搜索",
     "cancel": "取消",
-    "confirm": "确定"
+    "confirm": "确定",
+    "toggleTheme": "切换主题"
   },
   "home": {
     "title": "概览",
@@ -23,12 +30,44 @@
     "runtimeDesktop": "桌面端（Tauri）",
     "runtimeBrowser": "浏览器（开发模式）",
     "stack": "技术栈",
+    "ui": "界面层",
     "next": "下一阶段",
     "nextItems": {
       "system": "托盘、通知、开机自启、单实例",
       "update": "自动更新与签名发布",
       "job": "后台任务引擎与进度推送"
-    }
+    },
+    "hero": {
+      "badge": "Tauri 2 · React 19 · Tailwind 4 · Velora UI",
+      "titleLine1": "把桌面应用",
+      "titleLine2": "从零直接做到发布",
+      "subtitle": "托盘、通知、开机自启、多语言与主题切换都已接好，删掉示例页就能开始写业务。",
+      "ctaPrimary": "打开任务示例",
+      "ctaSecondary": "打开设置"
+    },
+    "stats": {
+      "components": "内置组件",
+      "integrations": "系统集成",
+      "pages": "示例页面"
+    },
+    "terminalLabel": "开发命令",
+    "facts": {
+      "title": "运行信息"
+    },
+    "capabilities": {
+      "title": "已接通的能力",
+      "hint": "全部由 Rust 侧实现，前端通过 IPC 调用",
+      "planned": "规划中",
+      "tray": "托盘与单实例",
+      "trayHint": "常驻菜单栏，二次启动会唤回主窗口",
+      "notify": "桌面通知",
+      "notifyHint": "系统级提醒，带权限探测与失败回退",
+      "autostart": "开机自启",
+      "autostartHint": "登录后静默启动，可在设置里随时关闭",
+      "update": "自动更新",
+      "updateHint": "签名发布链路，下一阶段接入"
+    },
+    "marqueeLabel": "技术栈"
   },
   "tasks": {
     "title": "任务",
@@ -44,6 +83,11 @@
   "settings": {
     "title": "设置",
     "subtitle": "设置统一存放在一处，后续可平滑迁移到本地文件",
+    "tabs": {
+      "appearance": "外观",
+      "integrations": "系统集成",
+      "about": "关于"
+    },
     "appearance": "外观",
     "appearanceHint": "浅色 / 深色 / 跟随系统",
     "theme": {
@@ -53,7 +97,24 @@
     },
     "language": "语言",
     "languageHint": "界面语言，中英文同步切换",
+    "integrations": "系统集成",
+    "integrationsHint": "通知与开机自启，仅桌面端生效",
+    "notifications": "桌面通知",
+    "notificationsHint": "允许应用通过系统通知提醒你",
+    "testNotification": "发送测试通知",
+    "notifyTitle": "通知可用",
+    "notifyBody": "这是一条来自应用的测试通知。",
+    "notifyOk": "已发送",
+    "notifyDisabled": "请先打开桌面通知开关",
+    "notifyDenied": "通知权限被拒绝，请在系统设置中允许",
+    "notifyUnsupported": "浏览器模式下不可用",
+    "notifyError": "发送失败",
+    "autoStart": "开机自启",
+    "autoStartHint": "登录系统后自动在后台运行",
+    "autoStartFailed": "设置失败，请检查系统权限",
+    "desktopOnly": "仅桌面端可用",
     "about": "关于",
-    "aboutHint": "模板版本与标识"
+    "aboutHint": "模板版本与标识",
+    "aboutUi": "界面层"
   }
 }

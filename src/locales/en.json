@@ -3,7 +3,13 @@
     "name": "Tauri Template",
     "tagline": "A desktop base you can start shipping on"
   },
+  "tray": {
+    "show": "Show Main Window",
+    "settings": "Settings",
+    "quit": "Quit"
+  },
   "nav": {
+    "label": "Main navigation",
     "home": "Overview",
     "tasks": "Tasks",
     "settings": "Settings"
@@ -14,7 +20,8 @@
     "version": "Version",
     "search": "Search",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "toggleTheme": "Toggle theme"
   },
   "home": {
     "title": "Overview",
@@ -23,12 +30,44 @@
     "runtimeDesktop": "Desktop (Tauri)",
     "runtimeBrowser": "Browser (dev mode)",
     "stack": "Stack",
+    "ui": "UI layer",
     "next": "Next up",
     "nextItems": {
       "system": "Tray, notifications, autostart, single instance",
       "update": "Auto update and signed releases",
       "job": "Background job engine with progress streaming"
-    }
+    },
+    "hero": {
+      "badge": "Tauri 2 · React 19 · Tailwind 4 · Velora UI",
+      "titleLine1": "Ship a desktop app",
+      "titleLine2": "straight from the first commit",
+      "subtitle": "Tray, notifications, launch at login, i18n and theming are already wired. Delete the sample pages and start writing product code.",
+      "ctaPrimary": "Open the task demo",
+      "ctaSecondary": "Open settings"
+    },
+    "stats": {
+      "components": "Components",
+      "integrations": "Integrations",
+      "pages": "Sample pages"
+    },
+    "terminalLabel": "Dev command",
+    "facts": {
+      "title": "Runtime info"
+    },
+    "capabilities": {
+      "title": "Wired up already",
+      "hint": "All implemented in Rust and called over IPC",
+      "planned": "Planned",
+      "tray": "Tray and single instance",
+      "trayHint": "Lives in the menu bar and re-focuses on a second launch",
+      "notify": "Desktop notifications",
+      "notifyHint": "System-level alerts with permission probing and fallbacks",
+      "autostart": "Launch at login",
+      "autostartHint": "Starts silently after sign-in, toggle it any time",
+      "update": "Auto update",
+      "updateHint": "Signed release pipeline, next milestone"
+    },
+    "marqueeLabel": "Stack"
   },
   "tasks": {
     "title": "Tasks",
@@ -44,6 +83,11 @@
   "settings": {
     "title": "Settings",
     "subtitle": "All settings live in one store and can move to disk later",
+    "tabs": {
+      "appearance": "Appearance",
+      "integrations": "Integrations",
+      "about": "About"
+    },
     "appearance": "Appearance",
     "appearanceHint": "Light / dark / follow system",
     "theme": {
@@ -53,7 +97,24 @@
     },
     "language": "Language",
     "languageHint": "UI language, applied across the app",
+    "integrations": "System integration",
+    "integrationsHint": "Notifications and launch at login, desktop only",
+    "notifications": "Desktop notifications",
+    "notificationsHint": "Let the app reach you through system notifications",
+    "testNotification": "Send test notification",
+    "notifyTitle": "Notifications work",
+    "notifyBody": "This is a test notification from the app.",
+    "notifyOk": "Sent",
+    "notifyDisabled": "Turn on desktop notifications first",
+    "notifyDenied": "Permission denied. Allow notifications in system settings",
+    "notifyUnsupported": "Not available in browser mode",
+    "notifyError": "Failed to send",
+    "autoStart": "Launch at login",
+    "autoStartHint": "Start in background after you sign in",
+    "autoStartFailed": "Failed to change. Check system permissions",
+    "desktopOnly": "Desktop only",
     "about": "About",
-    "aboutHint": "Template version and identity"
+    "aboutHint": "Template version and identity",
+    "aboutUi": "UI layer"
   }
 }
