@@ -24,12 +24,46 @@
 
 ## 2. 定规格
 
-新建类改动写 `specs/NNNN-<name>.md`（模板见 `specs/_template.md`）。规格里最有价值的是**验收标准**和**非目标**：
+规格由 **OpenSpec** 管理，不再手写 `specs/NNNN-*.md`（决策见 `docs/adr/0002-openspec-over-manual-specs.md`）。
 
-- 验收标准写成可执行句子："点击 X 后 Y 出现，且刷新后仍存在"
-- 非目标明确写出"本次不做"，防止范围蔓延
+| 场景 | 做什么 |
+|---|---|
+| 需求还不清楚 | `/opsx-explore`：读代码、摆选项、收敛方案，先不写代码 |
+| 需求已明确 | `/opsx-propose <kebab-case-name>`：生成 proposal / specs / design / tasks |
+| 按计划实现 | `/opsx-apply`：逐条勾选 tasks |
+| 变更完成 | `/opsx-archive`：归档并把能力合并进 `openspec/specs/` |
 
-修改类可以省掉文件，但验收条件必须落在对话里。
+**什么时候必须走 OpenSpec**（任一命中）：
+
+- 跨两个及以上包（根 `src` / `packages/*` / `website` / `src-tauri`）
+- 新增或改变公开 API、路由、设置字段
+- 涉及 Rust 侧、Tauri 插件、capabilities 权限
+- 单次改动预计超过 5 个文件或 200 行
+
+改错别字、调格式、单文件小修不需要。判不准时走轻量路径：口头说清验收条件即可，但仍要满足 `docs/quality.md` 的 DoD。
+
+规格里最有价值的两块：
+
+- **Scenario**：`WHEN … THEN …` 写法，能当场演示
+- **失败分支**：异常、空数据、无权限时的表现必须写
+
+目录约定：
+
+```
+openspec/
+├── specs/            系统当前必须满足什么（累积态，随 archive 更新）
+└── changes/
+    ├── <name>/       进行中的变更：proposal.md / specs/ / design.md / tasks.md
+    └── archive/      已完成归档
+```
+
+常用校验：
+
+```bash
+openspec list                 # 看进行中的变更
+openspec list --specs         # 看已沉淀的规格
+openspec validate --all       # 校验格式
+```
 
 ## 3. 拆任务
 

@@ -51,25 +51,28 @@
 | `pnpm velora list` | 看还有哪些组件/区块没装 |
 | `pnpm velora add <name>` | 拉取组件或区块（自动递归依赖、改写导入、合并 CSS） |
 | `pnpm velora add --category <类别>` | 按类别批量拉取 |
+| `openspec list` | 看进行中的变更（OpenSpec） |
+| `openspec list --specs` | 看已沉淀的规格 |
+| `openspec validate --all` | 校验规格格式 |
 | `pnpm vitest run -t "名字"` | 只跑某个测试 |
 
 ## 工作流（六步）
 
-理解 → 定规格（`specs/NNNN-*.md`，验收可执行）→ 按层拆（类型 → 逻辑 → UI → 测试）→ 实现 → 验证 → 交付。
+理解 → 定规格 → 按层拆（类型 → 逻辑 → UI → 测试）→ 实现 → 验证 → 交付。
 
-- 每步退出条件不满足，不进入下一步
-- 细则见 `docs/workflow.md`
+- 规格由 **OpenSpec** 管，入口是 `/opsx-explore`（想不清）与 `/opsx-propose <name>`（想清了）；完成后 `/opsx-archive`
+- 细则与「什么规模必须走 OpenSpec」见 `docs/workflow.md`
 - 意图不明先归类再问，不猜
 
 ## 任务路由
 
 | 用户意图 | 典型说法 | 先读 | 技能 |
 |---|---|---|---|
-| 新功能 / 新页面 | "加个 xx 功能" | `docs/workflow.md` | `intent-spec` |
+| 新功能 / 新页面 | "加个 xx 功能" | `docs/workflow.md` | `brainstorming` → `intent-spec` → OpenSpec |
 | 改界面 / 调样式 | "这里不好看""换个配色" | `docs/ui.md` | `ui-gate` |
 | 目录 / 模块架构 | "重构一下目录""加个模块" | `docs/architecture.md` | `project-structure` |
 | 用 Velora 组件 | "加个 hero""要个 pricing 区" | `docs/velora.md` | — |
-| 修 bug / 报错 | "报错了""不生效" | `docs/workflow.md` §修复 | 全局 `systematic-debugging` |
+| 修 bug / 报错 | "报错了""不生效" | `docs/workflow.md` §修复 | `systematic-debugging` |
 | 质量审查 | "审查一下""有没有问题" | `docs/quality.md` | `quality-review` |
 | 提交 / 发版 | "提交""打包发布" | `docs/quality.md` §交付与发布 | `release-check` |
 | 清理磁盘 | "空间不够""清理缓存" | 全局清理技能 | `cleanup-disk` |
@@ -79,11 +82,25 @@
 
 ## 技能使用规则
 
-项目里装了 11 个技能（`.agents/skills/`），功能有重叠。**最多同时加载 2 个**，按下面分工取，不要全都铺开。
+项目里装了两类技能（`.agents/skills/` 共 24 个），功能有重叠。**最多同时加载 2 个**，按下面分工取。
+
+**流程类**（来自 superpowers，详见 `docs/superpowers.md`）：
+
+| 场景 | 技能 |
+|---|---|
+| 需求还不清楚、要摆方案 | `brainstorming` |
+| 把规格拆成可执行任务 | `writing-plans` |
+| 按计划实现 / 大改派子代理 | `executing-plans` / `subagent-driven-development` |
+| 修 bug | `systematic-debugging` |
+| 写新逻辑 | `test-driven-development` |
+| 交付前验证 | `verification-before-completion` |
+| 审查与收尾 | `requesting-code-review` / `receiving-code-review` / `finishing-a-development-branch` |
+
+**设计类**：
 
 | 场景 | 技能 | 边界 |
 |---|---|---|
-| 功能 / 页面需求拆规格 | `intent-spec` | 只管需求，不碰实现 |
+| 需求拆规格 | `intent-spec` | 产出交给 OpenSpec `/opsx-propose` |
 | 定风格 / 配色 / 字体候选 | `ui-ux-pro-max` | 推荐只作候选，令牌仍用本项目的 |
 | 查 UX 细节（空态、校验、无障碍、动效） | `ui-ux-pro-max` `--domain ux\|motion` | 同上 |
 | 落地实现（组件 API、Tailwind、深色） | `ui-styling` | **不用它的 `npx shadcn` 命令** |
@@ -92,14 +109,15 @@
 | 审查改动、提交发版 | `quality-review` / `release-check` | — |
 | 清理磁盘 | `cleanup-disk` | — |
 
-`banner-design`、`brand`、`design`、`design-system`、`slides` 是通用设计技能，**本项目暂时用不到**（没有海报、品牌手册、幻灯片需求）。真要用时按它们的说明单独加载，别和 `ui-gate` 同时走。
+`banner-design`、`brand`、`design`、`design-system`、`slides` 是通用设计技能，**本项目暂时用不到**。
 
 硬约束（技能与项目规范冲突时，一律以项目为准）：
 
 1. **令牌不换**：任何技能推荐的色板、字体、圆角都只当候选，落地用 `packages/velora/styles/tokens.css` 里的变量。
 2. **组件不另装**：不用 `npx shadcn@latest add`，缺组件用 `pnpm velora add <name>`。原因见 `docs/velora.md`。
 3. **设计决策只有一个落点**：写 `docs/design.md`，不用 `ui-ux-pro-max --persist` 生成 `design-system/`。
-4. **不为技能装依赖**：`ui-ux-pro-max` 的脚本只用 Python 标准库。不要 `pip install`，也不要 `npm i -g`。
+4. **规格只有一个落点**：写 `openspec/`，不用 superpowers 默认的 `docs/superpowers/plans/`——计划写进 `openspec/changes/<name>/tasks.md`。
+5. **不为技能装依赖**：`ui-ux-pro-max` 的脚本只用 Python 标准库。不要 `pip install`，也不要 `npm i -g`。
 
 `ui-ux-pro-max` 的检索是**关键词命中**，不是语义搜索。查不到时换更贴近准则的措辞（例如用 `"form validation error"` 而不是 `"设置面板不好看"`），别拿空结果当"没有建议"。
 
@@ -110,6 +128,7 @@
 | **CLAUDE.md 写成软链** | 编辑 `CLAUDE.md` 时实际改的是 `AGENTS.md`，把规范覆盖成一行 `@AGENTS.md`，两个文件都变成自引用 | `CLAUDE.md` 是**普通文件**，内容只有一行 `@AGENTS.md`；规范只写在 `AGENTS.md` |
 | **两套按钮** | 不知道用哪个 `Button` | 业务用 `src/components/ui/Button.tsx`（已封装 shadcn 版）；区块内部用 `@template/velora/ui/button` |
 | **区块自带的英文文案** | 页面上出现 "How does the 14-day free trial work" | 拉取 block 后先把它顶部的 const 文案换成本产品内容 |
+| **旧 specs/ 目录** | 又想手写 `specs/NNNN-*.md` | 已废止，需求一律走 `openspec/`。手写两份会漂移 |
 
 ## 边界
 
@@ -126,18 +145,22 @@
 | 文件 | 什么时候读 |
 |---|---|
 | `docs/workflow.md` | 任何非琐碎改动开始前 |
+| `docs/openspec.md` | 用 OpenSpec 管需求：命令、格式、何时必须走 |
+| `docs/superpowers.md` | 流程类技能的分工与与 OpenSpec 的边界 |
 | `docs/architecture.md` | 新增文件、新模块、跨层改动 |
 | `docs/velora.md` | 用/加/升级 Velora 组件与区块 |
 | `docs/ui.md` | 任何视觉/交互改动 |
 | `docs/quality.md` | 自查、提交、发版 |
 | `docs/tech-notes.md` | 碰到 Tauri/主题/多语言/i18n 的坑 |
 | `docs/design.md` | 改视觉时同步更新 |
-| `specs/` | 当前任务对应的规格 |
+| `openspec/specs/` | 看某块能力当前必须满足什么 |
+| `docs/adr/` | 想知道某个决策为什么这么做 |
 | `.github/instructions/` | 改 `src/`、`src-tauri/`、`docs/` 时自动命中 |
 
 ## 完成定义（DoD）
 
 - [ ] 验收标准逐条可演示
+- [ ] 走 OpenSpec 的改动：`openspec validate --all` 通过，且已 `/opsx-archive`
 - [ ] `pnpm check` 通过（贴输出）
 - [ ] 涉及 Rust：`pnpm check:rust` 通过
 - [ ] 涉及官网：`pnpm website:check` + `pnpm website:build` 通过

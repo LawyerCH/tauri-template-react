@@ -68,7 +68,8 @@ scripts/         velora.mjs 组件拉取脚本
 | `docs/tech-notes.md` | 踩过的坑与做法 |
 | `docs/design.md` | 当前视觉决策与截图 |
 | `docs/adr/` | 架构决策记录 |
-| `specs/` | 每个功能的规格，`_template.md` 为模板 |
+| `openspec/specs/` | 能力累积态：系统当前必须满足什么 |
+| `openspec/changes/` | 进行中的变更（proposal / specs / design / tasks） |
 
 用法：让 AI 直接读 `AGENTS.md`，按任务路由表进入对应技能；一句话咨询不会启动完整流程。
 
