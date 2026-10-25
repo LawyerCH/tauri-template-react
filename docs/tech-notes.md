@@ -97,3 +97,7 @@
 
 **升级组件**
 做法：重跑 registry 拉取覆盖 `src/components/velora/`；本仓库只允许修编译错误（如 `noUncheckedIndexedAccess` 下的数组下标），修完在这一节记一笔。
+
+**例外：需要双语的硬编码文案**
+现象：`animated-sidebar.tsx` 里 `Keep expanded` / `Open navigation` / `Close navigation` 是英文硬编码，页面无法覆盖。
+做法：给组件加可选字符串 prop（`pinLabel` / `openLabel` / `closeLabel`），默认值保持原英文，由 `AppShell` 传 `t()` 进来的译文。新增 prop 属于"加接口"，不改默认行为，registry 升级时按同样方式补回即可。

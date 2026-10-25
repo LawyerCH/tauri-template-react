@@ -1,5 +1,18 @@
 # 目录架构
 
+## workspace 布局
+
+```
+仓库根（桌面应用）       Tauri 2 + React 19 + Vite
+├── src/               桌面端页面与组件
+├── src-tauri/         Rust 侧
+├── packages/velora/   共享 UI 包 @template/velora
+├── website/           官网站点 @template/website（Astro）
+└── scripts/           工具脚本（velora.mjs）
+```
+
+三个 workspace 项目：根目录（桌面应用）、`packages/velora`（UI 包）、`site`（官网）。
+
 ## 分层与依赖方向
 
 ```
@@ -7,11 +20,11 @@ src/
 ├── app/          路由、导航表、全局 Provider 装配
 ├── components/
 │   ├── layout/   外壳（侧栏、页头），只依赖 lib
-│   └── ui/       通用组件：Button、Section、EmptyState、RadioGroup
+│   └── ui/       业务通用组件：Button、Section、EmptyState、RadioGroup、Toggle
 ├── features/     按业务域分目录：home / tasks / settings
-├── lib/          基础设施：settings、i18n、theme、cn、env
+├── lib/          基础设施：settings、i18n、theme、env
 ├── locales/      zh-CN.json / en.json
-├── styles/       tokens.css（变量）+ index.css（Tailwind 入口）
+├── styles/       index.css（只做 @import 聚合）
 └── test/         测试装配
 ```
 
@@ -25,6 +38,7 @@ app ──▶ features ──▶ components ──▶ lib
 - `lib` 不依赖 `features` / `components`
 - `components/ui` 不含业务逻辑，不 import `features`
 - `features/A` 不 import `features/B`；要共享就上提到 `components` 或 `lib`
+- **UI 组件与主题令牌一律走 `@template/velora`**，不在 `src/` 里重建一份
 
 ## 新东西放哪里
 
@@ -33,6 +47,8 @@ app ──▶ features ──▶ components ──▶ lib
 | 新页面 | `src/features/<域>/XxxPage.tsx` + 在 `app/router.tsx` 注册 | 一个业务域一个目录 |
 | 页面内组件 | 同目录 `XxxList.tsx` | 只服务当前页 |
 | 跨页复用组件 | `src/components/ui/` | 被 2 处以上使用才上提 |
+| 动画组件 / 成品区块 | `pnpm velora add <name>` → `packages/velora` | 见 `docs/velora.md` |
+| 官网区块 | `website/src/sections/*.tsx`，页面在 `website/src/pages/*.astro` | 与桌面端共用一份组件 |
 | 通用函数 | `src/lib/<主题>.ts` | 按主题建文件，不建 `utils.ts` 垃圾桶 |
 | 用户偏好 | `src/lib/settings/store.ts` 加字段 | 唯一入口 |
 | 文案 | `src/locales/*.json` 同名 key | 必须双语 |

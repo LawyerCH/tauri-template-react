@@ -12,7 +12,10 @@
     "label": "主导航",
     "home": "概览",
     "tasks": "任务",
-    "settings": "设置"
+    "settings": "设置",
+    "keepExpanded": "保持展开",
+    "open": "打开导航",
+    "close": "关闭导航"
   },
   "common": {
     "add": "新建",
@@ -82,25 +85,14 @@
   },
   "settings": {
     "title": "设置",
-    "subtitle": "设置统一存放在一处，后续可平滑迁移到本地文件",
-    "tabs": {
-      "appearance": "外观",
-      "integrations": "系统集成",
-      "about": "关于"
-    },
     "appearance": "外观",
-    "appearanceHint": "浅色 / 深色 / 跟随系统",
     "theme": {
       "light": "浅色",
       "dark": "深色",
       "system": "跟随系统"
     },
     "language": "语言",
-    "languageHint": "界面语言，中英文同步切换",
-    "integrations": "系统集成",
-    "integrationsHint": "通知与开机自启，仅桌面端生效",
     "notifications": "桌面通知",
-    "notificationsHint": "允许应用通过系统通知提醒你",
     "testNotification": "发送测试通知",
     "notifyTitle": "通知可用",
     "notifyBody": "这是一条来自应用的测试通知。",
@@ -110,11 +102,8 @@
     "notifyUnsupported": "浏览器模式下不可用",
     "notifyError": "发送失败",
     "autoStart": "开机自启",
-    "autoStartHint": "登录系统后自动在后台运行",
     "autoStartFailed": "设置失败，请检查系统权限",
     "desktopOnly": "仅桌面端可用",
-    "about": "关于",
-    "aboutHint": "模板版本与标识",
     "aboutUi": "界面层",
     "autostartOn": "已开启：登录系统后会自动在后台启动",
     "autostartOff": "已关闭",

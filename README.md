@@ -8,7 +8,19 @@
 pnpm install
 pnpm tauri dev     # 桌面应用
 pnpm dev           # 只跑前端，浏览器调试
+pnpm website:dev  # 官网站点（localhost:1421）
 ```
+
+## 仓库结构
+
+```
+仓库根         桌面应用（Tauri + Vite）
+packages/velora  共享 UI 包 @template/velora（令牌 + 组件 + 区块）
+website/         官网站点 @template/website（Astro，静态预渲染）
+scripts/         velora.mjs 组件拉取脚本
+```
+
+桌面应用与官网共用一份 UI 组件；新增组件用 `pnpm velora add <name>`，细则见 [`docs/velora.md`](./docs/velora.md)。
 
 ## 命令
 
@@ -16,6 +28,10 @@ pnpm dev           # 只跑前端，浏览器调试
 |---|---|
 | `pnpm check` | typecheck + lint + test，提交前必须全绿 |
 | `pnpm check:rust` | Rust 侧 fmt + clippy 门禁 |
+| `pnpm website:build` | 官网构建（Astro 静态输出） |
+| `pnpm website:check` | 官网类型检查 |
+| `pnpm velora list` | 看还没装哪些 Velora 组件 |
+| `pnpm velora add <name>` | 拉取组件或区块 |
 | `pnpm build` | 类型检查 + 前端构建 |
 | `pnpm tauri build` | 打包安装包 |
 | `pnpm format` | Prettier 格式化 |

@@ -1,0 +1,27 @@
+{
+  "name": "@template/velora",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./styles/tokens.css": "./styles/tokens.css",
+    "./styles/theme.css": "./styles/theme.css",
+    "./lib/utils": "./src/lib/utils.ts",
+    "./ui/*": "./src/ui/*.tsx",
+    "./velora/*": "./src/velora/*.tsx",
+    "./blocks/*": "./src/blocks/*.tsx"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.61.0",
+    "motion": "^14.6.0",
+    "radix-ui": "^1.6.7",
+    "tailwind-merge": "^3.7.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

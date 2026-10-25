@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 interface TextShimmerProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;

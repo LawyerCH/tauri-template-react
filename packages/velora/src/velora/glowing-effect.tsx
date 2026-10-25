@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 interface GlowingEffectProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Distance in px outside the card at which the glow starts to fade in */

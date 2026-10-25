@@ -6,8 +6,10 @@ node_modules
 # ---- 构建产物 ----
 dist
 dist-ssr
+**/dist
 coverage
 *.tsbuildinfo
+.astro
 vite.config.*.timestamp-*
 src-tauri/target
 src-tauri/gen/schemas

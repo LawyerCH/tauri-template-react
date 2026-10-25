@@ -12,7 +12,10 @@
     "label": "Main navigation",
     "home": "Overview",
     "tasks": "Tasks",
-    "settings": "Settings"
+    "settings": "Settings",
+    "keepExpanded": "Keep expanded",
+    "open": "Open navigation",
+    "close": "Close navigation"
   },
   "common": {
     "add": "New",
@@ -82,25 +85,14 @@
   },
   "settings": {
     "title": "Settings",
-    "subtitle": "All settings live in one store and can move to disk later",
-    "tabs": {
-      "appearance": "Appearance",
-      "integrations": "Integrations",
-      "about": "About"
-    },
     "appearance": "Appearance",
-    "appearanceHint": "Light / dark / follow system",
     "theme": {
       "light": "Light",
       "dark": "Dark",
       "system": "System"
     },
     "language": "Language",
-    "languageHint": "UI language, applied across the app",
-    "integrations": "System integration",
-    "integrationsHint": "Notifications and launch at login, desktop only",
     "notifications": "Desktop notifications",
-    "notificationsHint": "Let the app reach you through system notifications",
     "testNotification": "Send test notification",
     "notifyTitle": "Notifications work",
     "notifyBody": "This is a test notification from the app.",
@@ -110,11 +102,8 @@
     "notifyUnsupported": "Not available in browser mode",
     "notifyError": "Failed to send",
     "autoStart": "Launch at login",
-    "autoStartHint": "Start in background after you sign in",
     "autoStartFailed": "Failed to change. Check system permissions",
     "desktopOnly": "Desktop only",
-    "about": "About",
-    "aboutHint": "Template version and identity",
     "aboutUi": "UI layer",
     "autostartOn": "On: the app will start in the background after you sign in",
     "autostartOff": "Off",

@@ -1,19 +1,19 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, BellRing, Boxes, Power, RefreshCw, Settings2, Terminal as TerminalIcon } from "lucide-react";
-import { AnimatedGradientText } from "@/components/velora/animated-gradient-text";
-import { AuroraBackground } from "@/components/velora/aurora-background";
-import { BlurFade } from "@/components/velora/blur-fade";
-import { GridPattern } from "@/components/velora/grid-pattern";
-import { Marquee } from "@/components/velora/marquee";
-import { MovingBorder } from "@/components/velora/moving-border";
-import { NumberTicker } from "@/components/velora/number-ticker";
-import { ShimmerButton } from "@/components/velora/shimmer-button";
-import { SpotlightCard } from "@/components/velora/spotlight-card";
-import { Terminal } from "@/components/velora/terminal";
-import { TextShimmer } from "@/components/velora/text-shimmer";
+import { AnimatedGradientText } from "@template/velora/velora/animated-gradient-text";
+import { AuroraBackground } from "@template/velora/velora/aurora-background";
+import { BlurFade } from "@template/velora/velora/blur-fade";
+import { GridPattern } from "@template/velora/velora/grid-pattern";
+import { Marquee } from "@template/velora/velora/marquee";
+import { MovingBorder } from "@template/velora/velora/moving-border";
+import { NumberTicker } from "@template/velora/velora/number-ticker";
+import { ShimmerButton } from "@template/velora/velora/shimmer-button";
+import { SpotlightCard } from "@template/velora/velora/spotlight-card";
+import { Terminal } from "@template/velora/velora/terminal";
+import { TextShimmer } from "@template/velora/velora/text-shimmer";
 import { APP_VERSION, isTauri } from "@/lib/env";
-import { cn } from "@/lib/utils";
+import { cn } from "@template/velora/lib/utils";
 
 const STACK = [
   "Tauri 2",

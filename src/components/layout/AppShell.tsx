@@ -4,10 +4,10 @@ import { listen } from "@tauri-apps/api/event";
 import { useTranslation } from "react-i18next";
 import { Moon, Sun } from "lucide-react";
 import { NAV_ITEMS, DEFAULT_NAV_ITEM } from "@/app/navigation";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/velora/animated-sidebar";
+import { Sidebar, SidebarBody, SidebarLink } from "@template/velora/velora/animated-sidebar";
 import { APP_VERSION, isTauri } from "@/lib/env";
 import { useSettings } from "@/lib/settings/store";
-import { cn } from "@/lib/utils";
+import { cn } from "@template/velora/lib/utils";
 
 const PINNED_KEY = "app.sidebar.pinned";
 
@@ -62,6 +62,9 @@ export function AppShell() {
     }}>
       <SidebarBody
         label={t("nav.label")}
+        pinLabel={t("nav.keepExpanded")}
+        openLabel={t("nav.open")}
+        closeLabel={t("nav.close")}
         logo={<BrandMark />}
         title={<span className="text-sm font-medium tracking-tight">{t("app.name")}</span>}
       >

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 type LoaderSize = "sm" | "md" | "lg";
 

@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 interface AuroraBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Overall opacity of the aurora blobs */

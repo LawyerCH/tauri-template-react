@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@template/velora/lib/utils";
 
 interface ToggleProps {
   checked: boolean;

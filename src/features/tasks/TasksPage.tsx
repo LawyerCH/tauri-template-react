@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Check, Plus, Trash2 } from "lucide-react";
-import { BlurFade } from "@/components/velora/blur-fade";
+import { BlurFade } from "@template/velora/velora/blur-fade";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { cn } from "@/lib/utils";
+import { cn } from "@template/velora/lib/utils";
 
 interface Task {
   id: string;

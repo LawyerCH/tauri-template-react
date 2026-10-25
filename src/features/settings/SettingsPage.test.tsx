@@ -28,8 +28,6 @@ describe("SettingsPage 系统集成", () => {
   it("点开机自启开关会立即翻转并调用 enable()", async () => {
     render(<SettingsPage />);
 
-    await userEvent.click(screen.getByRole("tab", { name: "settings.tabs.integrations" }));
-
     const switches = screen.getAllByRole("switch");
     const autoStartSwitch = switches[switches.length - 1];
     expect(autoStartSwitch).toHaveAttribute("aria-checked", "false");

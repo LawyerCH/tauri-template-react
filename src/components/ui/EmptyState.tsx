@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { DotPattern } from "@/components/velora/grid-pattern";
+import { DotPattern } from "@template/velora/velora/grid-pattern";
 
 interface EmptyStateProps {
   title: string;

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useInView, useReducedMotion } from "motion/react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 const noopSubscribe = () => () => {};
 

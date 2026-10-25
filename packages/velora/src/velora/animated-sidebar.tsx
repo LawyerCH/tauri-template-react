@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useId, useRef, useState } from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "../lib/utils";
 
 const SidebarContext = createContext<{
   pinned: boolean;
@@ -74,6 +74,12 @@ interface SidebarBodyProps {
   label?: string;
   /** Show the "Keep expanded" toggle at the bottom of the rail */
   pinnable?: boolean;
+  /** Accessible + visible text of the pin toggle (defaults to "Keep expanded") */
+  pinLabel?: string;
+  /** Accessible name of the narrow-screen menu button (defaults to "Open navigation") */
+  openLabel?: string;
+  /** Accessible name of the drawer close button (defaults to "Close navigation") */
+  closeLabel?: string;
   /** Classes for the navigation panel (rail and drawer) */
   className?: string;
   /** SidebarLink elements */
@@ -87,6 +93,9 @@ export function SidebarBody({
   footer,
   label = "Main",
   pinnable = true,
+  pinLabel = "Keep expanded",
+  openLabel = "Open navigation",
+  closeLabel = "Close navigation",
   className,
   children,
 }: SidebarBodyProps) {
@@ -126,7 +135,7 @@ export function SidebarBody({
           <button
             ref={menuRef}
             type="button"
-            aria-label="Open navigation"
+            aria-label={openLabel}
             aria-expanded={drawerOpen}
             aria-controls={id}
             onClick={() => {
@@ -167,7 +176,7 @@ export function SidebarBody({
               <span className={cn("shrink-0 transition-transform duration-300 motion-reduce:transition-none", pinned && "rotate-180")}>
                 {icon("m9 6 6 6-6 6")}
               </span>
-              <span className={reveal}>Keep expanded</span>
+              <span className={reveal}>{pinLabel}</span>
             </button>
           )}
         </nav>
@@ -190,7 +199,7 @@ export function SidebarBody({
           {head(
             <button
               type="button"
-              aria-label="Close navigation"
+              aria-label={closeLabel}
               onClick={() => drawerRef.current?.close()}
               className={control}
             >
