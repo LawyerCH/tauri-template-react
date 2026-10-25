@@ -43,7 +43,7 @@ export function Hero() {
               </a>
             </Button>
             <Button variant="outline" size="lg" className="h-11 rounded-full px-6" asChild>
-              <a href="#features">看看有什么</a>
+              <a href="/showcase">浏览组件目录</a>
             </Button>
           </div>
         </BlurFade>

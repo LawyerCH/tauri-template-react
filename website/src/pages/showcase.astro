@@ -1,0 +1,41 @@
+---
+import Base from "../layouts/Base.astro";
+import { ShowcaseGallery } from "../sections/showcase/ShowcaseGallery";
+---
+
+<Base
+  title="组件目录 — Tauri Template"
+  description="按功能浏览这个模板内置的 Velora 组件、成品区块与已组装页面。"
+>
+  <main class="min-h-full bg-background">
+    <header class="border-b px-6 py-14 lg:px-8">
+      <div class="mx-auto max-w-5xl">
+        <p class="text-sm font-medium text-primary">目录</p>
+        <h1 class="mt-3 text-3xl font-medium tracking-tight text-balance sm:text-4xl">
+          组件、模块与模板
+        </h1>
+        <p class="mt-4 max-w-2xl text-base text-pretty text-muted-foreground">
+          全部来自共享包 <code class="font-mono text-sm">packages/velora</code>，
+          桌面应用与官网站点共用同一份。缺什么用
+          <code class="font-mono text-sm"> pnpm velora add &lt;name&gt; </code>
+          补。
+        </p>
+      </div>
+    </header>
+
+    <div class="px-6 py-10 lg:px-8">
+      <div class="mx-auto max-w-5xl">
+        <ShowcaseGallery client:load />
+      </div>
+    </div>
+
+    <footer class="border-t px-6 py-8 lg:px-8">
+      <div
+        class="mx-auto flex max-w-5xl flex-col items-start justify-between gap-2 text-xs text-muted-foreground sm:flex-row sm:items-center"
+      >
+        <p>组件来自 Velora UI（MIT）</p>
+        <a href="/" class="hover:text-foreground">← 返回首页</a>
+      </div>
+    </footer>
+  </main>
+</Base>
