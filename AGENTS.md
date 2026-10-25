@@ -95,6 +95,16 @@
 | 互不依赖的并行任务 | `dispatching-parallel-agents` |
 | 需要隔离开发 | `using-git-worktrees` |
 
+**这三个技能从哪里拿输入**（细则见 `docs/handoff.md`）：
+
+| 技能 | 读什么 |
+|---|---|
+| `test-driven-development` | `openspec/changes/<name>/specs/*.md` 的 `Scenario`；找不到对应 Requirement 就先补规格 |
+| `requesting-code-review` | `tasks.md` 的勾选 + delta spec 的 Scenario + `design.md` 的决策 |
+| `verification-before-completion` | 逐条核对 `tasks.md`，不凭记忆列清单 |
+
+**不存在第二个事实源**。任何技能让你读 `docs/superpowers/plans/` 或 `docs/superpowers/specs/`，一律忽略。
+
 > superpowers 的 `brainstorming`、`writing-plans`、`executing-plans`、`subagent-driven-development`、`finishing-a-development-branch` **已移除**——它们会写 `docs/superpowers/` 下的设计文档与计划，与 OpenSpec 的 `proposal/design/tasks` 一一重叠。需求与计划一律走 OpenSpec。
 
 **设计类**：
@@ -148,6 +158,7 @@
 | `docs/workflow.md` | 任何非琐碎改动开始前 |
 | `docs/openspec.md` | 用 OpenSpec 管需求：命令、格式、何时必须走 |
 | `docs/superpowers.md` | 流程类技能的子集与移除原因 |
+| `docs/handoff.md` | **规格与实现的交接契约**：TDD 测什么、review 对什么、验证勾什么 |
 | `docs/architecture.md` | 新增文件、新模块、跨层改动 |
 | `docs/velora.md` | 用/加/升级 Velora 组件与区块 |
 | `docs/ui.md` | 任何视觉/交互改动 |

@@ -46,9 +46,19 @@ superpowers 全套 15 个技能里有 5 个会**写自己的文档目录**，与
 
 一句话：**OpenSpec 管"写什么、拆成什么"，superpowers 只管"做得对不对"**。
 
+两者之间的接口（TDD 测哪条 Requirement、review 对照什么、验证勾什么）见 **`docs/handoff.md`**。不看那份文件，"做得对不对"就没有标尺。
+
 ## 改过的技能文件
 
-`using-superpowers` 原文要求"进 plan mode 前必须先调 `brainstorming`"。该技能已删，已改为指向 OpenSpec 的 explore/propose。这是**唯一一处对上游技能的改动**，升级时需重新应用。
+对上游技能只做**指针替换**，不改正文：
+
+| 文件 | 改动 |
+|---|---|
+| `using-superpowers/SKILL.md` | 原文“进 plan mode 前先调 `brainstorming`” → 指向 OpenSpec explore/propose |
+| `requesting-code-review/SKILL.md` | 示例路径 `docs/superpowers/plans/...` → `openspec/changes/<name>/` |
+| `verification-before-completion/SKILL.md` | `Re-read plan` → `Re-read openspec/changes/<name>/tasks.md` |
+
+升级技能时需重新应用这三处，清单也记在 `docs/handoff.md`。
 
 ## 触发方式
 

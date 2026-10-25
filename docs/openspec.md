@@ -86,3 +86,5 @@ openspec/changes/add-dark-mode/
 - `intent-spec`（项目技能）：把一句话需求问清楚，产出可写进 `/opsx-propose` 的输入。
 - `quality-review` / `release-check`：实现完成后审查与提交。
 - 三者顺序：`intent-spec` → OpenSpec `propose` → 实现 → `quality-review` → `release-check`。
+
+**下游怎么用这些规格**：TDD 测哪条 Requirement、review 对照什么、验证勾什么，均在 **`docs/handoff.md`** 定义。那份文件是规格与实现之间的唯一接口，写规格时也要照着它确保 `Scenario` 可测试。
