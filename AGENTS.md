@@ -1,6 +1,6 @@
 # AGENTS.md
 
-> 本文件是本项目唯一的 AI 入口。`CLAUDE.md` 软链到这里，只维护这一份。
+> 本文件是本项目唯一的 AI 入口。`CLAUDE.md` 只有一行 `@AGENTS.md` 引用它，规范只维护这一份。
 
 ## 两层规范的分工
 
@@ -81,7 +81,7 @@
 
 | 坑 | 现象 | 正确做法 |
 |---|---|---|
-| **AGENTS.md 被覆盖** | 文件变成只有一行 `@AGENTS.md`，自我引用，规范全丢 | 改本文件时不要写入 `@` 引用行；发现行数骤减立刻从 git 找回 |
+| **CLAUDE.md 写成软链** | 编辑 `CLAUDE.md` 时实际改的是 `AGENTS.md`，把规范覆盖成一行 `@AGENTS.md`，两个文件都变成自引用 | `CLAUDE.md` 是**普通文件**，内容只有一行 `@AGENTS.md`；规范只写在 `AGENTS.md` |
 | **两套按钮** | 不知道用哪个 `Button` | 业务用 `src/components/ui/Button.tsx`（已封装 shadcn 版）；区块内部用 `@template/velora/ui/button` |
 | **区块自带的英文文案** | 页面上出现 "How does the 14-day free trial work" | 拉取 block 后先把它顶部的 const 文案换成本产品内容 |
 

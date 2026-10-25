@@ -4,10 +4,10 @@
 
 ## 文档与规范
 
-**AGENTS.md 变成一行 `@AGENTS.md`**
-现象：`wc -l AGENTS.md` 只剩 1 行，内容就是 `@AGENTS.md`；`CLAUDE.md` 软链到它，于是两个文件都变成自引用，项目规范全丢。
-原因：编辑器/工具把"引用文件"的写法（`@file`）直接写进了文件本身，等于让文件引用自己。
-做法：改 `AGENTS.md` 时**不要写入 `@` 开头的引用行**；`CLAUDE.md` 保持软链（`ln -sfn AGENTS.md CLAUDE.md`），不要给它填内容；发现行数骤减立刻 `git show <上一个好提交>:AGENTS.md` 找回。
+**CLAUDE.md 不要做成软链**
+现象：编辑 `CLAUDE.md` 时实际改的是 `AGENTS.md`，写入一行 `@AGENTS.md` 后两个文件都变成自引用，项目规范全丢。
+原因：软链与目标文件是同一份内容，无法做"只写一行引用"。
+做法：`CLAUDE.md` 是**普通文件**，内容只有 `@AGENTS.md`；规范正文只维护在 `AGENTS.md`。发现 `AGENTS.md` 行数骤减，用 `git show <上一个好提交>:AGENTS.md` 找回。
 
 **新增目录后 ESLint 扫到生成物**
 现象：`pnpm lint` 报 `site/.astro/types.d.ts` 里的 triple-slash 错误。
