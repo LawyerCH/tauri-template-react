@@ -1,0 +1,32 @@
+---
+import Base from "../layouts/Base.astro";
+import { FaqAccordion } from "@template/velora/blocks/faq-accordion";
+import { Hero } from "../sections/Hero";
+import { Stats } from "../sections/Stats";
+import { Features } from "../sections/Features";
+import { QuickStart } from "../sections/QuickStart";
+import { StackMarquee } from "../sections/StackMarquee";
+---
+
+<Base
+  title="Tauri Template — 可直接开工的桌面应用模板"
+  description="Tauri 2 + React 19 + Vite 8 + Tailwind 4 桌面应用模板：托盘、通知、开机自启、多语言与主题已接好。"
+>
+  <main class="min-h-full bg-background">
+    <Hero client:load />
+    <Stats client:visible />
+    <Features client:visible />
+    <QuickStart client:visible />
+    <StackMarquee client:visible />
+    <FaqAccordion client:visible />
+
+    <footer class="border-t px-6 py-10 lg:px-8">
+      <div
+        class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-xs text-muted-foreground sm:flex-row"
+      >
+        <p>Tauri Template · MIT</p>
+        <p>组件来自 Velora UI · 界面层 Tailwind 4 · Motion</p>
+      </div>
+    </footer>
+  </main>
+</Base>

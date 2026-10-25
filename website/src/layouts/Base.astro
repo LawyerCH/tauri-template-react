@@ -1,0 +1,36 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="canonical" href={Astro.site} />
+    <script is:inline>
+      // 跟随系统主题；桌面端由 settings store 写 data-theme
+      const dark = window.matchMedia("(prefers-color-scheme: dark)");
+      const apply = () => {
+        document.documentElement.dataset.theme = dark.matches ? "dark" : "light";
+      };
+      apply();
+      dark.addEventListener("change", apply);
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
