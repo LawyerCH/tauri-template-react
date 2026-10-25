@@ -6,7 +6,7 @@ description: 文档与规格写作约定
 
 ## 规格（openspec/）
 
-需求由 **OpenSpec** 管理，手写 `specs/NNNN-*.md` 已废止。详见 `docs/openspec.md`。
+需求由 **OpenSpec** 管理，手写 `specs/NNNN-*.md` 已废止。详见 `docs/workflow.md` §定规格。
 
 - 目录：`openspec/specs/` 是能力累积态，`openspec/changes/<name>/` 是进行中的变更
 - 每条 Requirement 至少一个 Scenario，写成 `WHEN … THEN …`，必须能当场演示
@@ -19,12 +19,14 @@ description: 文档与规格写作约定
 | 文件 | 职责 |
 |---|---|
 | `workflow.md` | 六步流程与退出条件 |
-| `openspec.md` | OpenSpec 命令、规格格式、何时必须走 |
 | `architecture.md` | 分层、依赖方向、新东西放哪 |
 | `ui.md` | 视觉与交互规则 |
 | `quality.md` | 自查、提交、发版 |
 | `tech-notes.md` | Tauri / 主题 / i18n 踩坑记录 |
 | `design.md` | 设计读法、dial、关键决策、状态覆盖 |
+| `velora.md` | 共享 UI 包怎么用、怎么加 |
+
+**规范不写过程史**：迁移记录、被删方案、某次踩坑的来龙去脉留在 ADR 或 commit message 里，不写进现行规则。规则只说"现在该怎么做"。
 
 - 改视觉时同步更新 `docs/design.md`
 - 架构决策写进 `docs/adr/NNNN-*.md`：只记"选了什么、为什么、放弃了什么"

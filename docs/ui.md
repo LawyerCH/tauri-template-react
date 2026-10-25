@@ -69,9 +69,9 @@
 
 ## 组件规则
 
-- 页面优先复用 `src/components/ui/`（项目自有）与 `src/components/velora/`（registry 原样落地），不在页面里手搓同类。
-- **不要改 `src/components/velora/` 下的源码**：升级靠重新拉 registry。需要变体就在 `ui/` 里包一层。
-- 新增 Velora 组件走 registry JSON（见 `docs/tech-notes.md`），不跑交互式 CLI。
+- 页面优先复用 `src/components/ui/`（项目自有）与 `@template/velora/*`（共享包），不在页面里手搓同类。
+- **不要改 `packages/velora/src/` 下的源码**：它是 registry 镜像，升级会覆盖。需要变体就在 `src/components/ui/` 里包一层。
+- 新增 Velora 组件用 `pnpm velora add <name>`，不跑交互式 CLI。
 - 按钮文案单行不换行（`whitespace-nowrap`）；同一意图全站一个措辞。
 - 所有交互元素键盘可达，焦点环可见；禁止 `outline: none` 无替代。
 - 动画必须尊重 `prefers-reduced-motion`；自动循环内容（marquee、flip words）需可暂停或聚焦即停。
@@ -111,4 +111,4 @@
 - 纯黑 `#000` / 纯白 `#fff` 大面积铺底
 - 数据台里用营销大字、超大标题
 - 只做浅色不做深色
-- 改动 `src/components/velora/` 源码（修 bug 除外，且需在 tech-notes 记一笔）
+- 改动 `packages/velora/src/` 源码（修 bug 除外，且需在 tech-notes 记一笔）

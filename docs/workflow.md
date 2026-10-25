@@ -1,22 +1,22 @@
 # 开发流程
 
-目标是让 AI 每次都走同一条可验证的路，而不是每次即兴发挥。六个阶段，每个阶段有明确产物和退出条件。
+目标是让 AI 每次都走同一条可验证的路。六个阶段，每个阶段有产物和退出条件。
 
 ## 1. 理解
 
-先判断意图类型，不同意图走不同深度：
+先判断意图，不同意图走不同深度：
 
 | 类型 | 判定信号 | 深度 |
 |---|---|---|
 | 新建 | "加一个""做个" | 完整六步 |
-| 修改 | "改成""调整" | 三步：理解 → 实现 → 验证 |
-| 修复 | "报错""不对""没生效" | 先复现，再定位，最后改 |
+| 修改 | "改成""调整" | 理解 → 实现 → 验证 |
+| 修复 | "报错""不对" | 先复现，再定位，最后改 |
 | 探索 | "有没有办法""能不能" | 只调研，不改代码 |
 | 咨询 | "这是什么""怎么用" | 直接回答，不碰文件 |
 
-必须问清三件事，缺一件就停下来问（一次问完，不要挤牙膏）：
+必须问清三件事，缺一件就停下来问（一次问完）：
 
-1. **谁用**：目标角色与使用场景
+1. **谁用**：目标角色与场景
 2. **失败怎么办**：异常、空数据、无权限时的表现
 3. **怎么算做完了**：可观察、可演示的验收条件
 
@@ -24,45 +24,32 @@
 
 ## 2. 定规格
 
-规格由 **OpenSpec** 管理，不再手写 `specs/NNNN-*.md`（决策见 `docs/adr/0002-openspec-over-manual-specs.md`）。
-
-| 场景 | 做什么 |
-|---|---|
-| 需求还不清楚 | `/opsx-explore`：读代码、摆选项、收敛方案，先不写代码 |
-| 需求已明确 | `/opsx-propose <kebab-case-name>`：生成 proposal / specs / design / tasks |
-| 按计划实现 | `/opsx-apply`：逐条勾选 tasks |
-| 变更完成 | `/opsx-archive`：归档并把能力合并进 `openspec/specs/` |
-
-**什么时候必须走 OpenSpec**（任一命中）：
-
-- 跨两个及以上包（根 `src` / `packages/*` / `website` / `src-tauri`）
-- 新增或改变公开 API、路由、设置字段
-- 涉及 Rust 侧、Tauri 插件、capabilities 权限
-- 单次改动预计超过 5 个文件或 200 行
-
-改错别字、调格式、单文件小修不需要。判不准时走轻量路径：口头说清验收条件即可，但仍要满足 `docs/quality.md` 的 DoD。
-
-规格里最有价值的两块：
-
-- **Scenario**：`WHEN … THEN …` 写法，能当场演示
-- **失败分支**：异常、空数据、无权限时的表现必须写
-
-目录约定：
+规格由 **OpenSpec** 管。手写 `specs/NNNN-*.md` 已废止。
 
 ```
-openspec/
-├── specs/            系统当前必须满足什么（累积态，随 archive 更新）
-└── changes/
-    ├── <name>/       进行中的变更：proposal.md / specs/ / design.md / tasks.md
-    └── archive/      已完成归档
+/opsx-explore                 需求还不清楚：读代码、摆选项、收敛方案
+/opsx-propose <kebab-name>    需求已明确：生成 proposal / specs / design / tasks
+/opsx-apply                   按 tasks 实现
+/opsx-archive                 归档并合并进 openspec/specs/
 ```
 
-常用校验：
+**必须走 OpenSpec**（任一命中）：跨两个及以上包、新增或改变公开 API / 路由 / 设置字段、涉及 Rust 或权限、预计超过 5 个文件或 200 行。
+
+改错别字、调格式、单文件小修不需要。判不准时走轻量路径：口头说清验收条件即可。
+
+`propose` 生成四份文件：`proposal.md`（为什么）、`specs/`（Requirement + Scenario）、`design.md`（方案与取舍）、`tasks.md`（可勾选清单）。
+
+**规格里最有价值的两块**：
+
+- **Scenario**：`WHEN … THEN …`，能当场演示
+- **失败分支**：异常、空数据、无权限时的表现
+
+`specs/` 用现在时描述"系统必须满足什么"；`changes/` 写计划与任务。
 
 ```bash
-openspec list                 # 看进行中的变更
-openspec list --specs         # 看已沉淀的规格
-openspec validate --all       # 校验格式
+openspec list              # 进行中的变更
+openspec list --specs      # 已沉淀的规格
+openspec validate --all    # 校验（不带参数会进交互，脚本里一律用 --all）
 ```
 
 ## 3. 拆任务
@@ -75,8 +62,8 @@ openspec validate --all       # 校验格式
 
 ## 4. 实现
 
-- 改前先读目标文件与相邻测试；找一个已有同类实现照着写
-- 复用现有组件与工具，不新造轮子；`src/components/ui` 里的能覆盖就不写新的
+- 改前先读目标文件与相邻测试；找已有同类实现照着写
+- 复用现有组件与工具，不新造轮子
 - 只在被两处以上复用时才提取抽象
 - 不写"以后可能用到"的开关、参数、兼容层
 
@@ -85,7 +72,7 @@ openspec validate --all       # 校验格式
 | 改动范围 | 必须做 |
 |---|---|
 | 纯前端 | `pnpm check` |
-| 涉及 Rust | `pnpm check` + `pnpm check:rust` |
+| 涉及 Rust | 上面 + `pnpm check:rust` |
 | 涉及 UI | 上面 + 浏览器实测：浅色/深色、窄屏、键盘 Tab |
 | 涉及打包配置 | 上面 + `pnpm tauri build` |
 
@@ -102,13 +89,34 @@ openspec validate --all       # 校验格式
 3. 后修复：能加测试就加一个能复现原问题的测试
 4. 同一思路最多试一次，第二次失败就换路径并说明
 
-## 上下文加载策略
+## 规格与实现的交接
+
+规格写完后，三个环节都要回来读它，**不凭记忆**：
+
+| 环节 | 读什么 | 规则 |
+|---|---|---|
+| 写测试 | `changes/<name>/specs/*.md` 的 Scenario | 每个 Scenario 至少一个测试；`WHEN` → 前置与操作，`THEN` → 断言。找不到对应 Requirement 就先补规格 |
+| 请求审查 | `changes/<name>/`（tasks + specs + design） | 按序看：tasks 勾了几条 → Scenario 是否有代码对应 → design 是否被违背 → 有没有规格外的顺手改 |
+| 声称完成 | `changes/<name>/tasks.md` | 逐条核对，报告"X/Y 完成，Z 未完成" |
+
+冲突裁决：
+
+| 冲突 | 听谁的 |
+|---|---|
+| spec 与 tasks 矛盾 | **spec**（Scenario 是验收标准，任务是手段） |
+| design 与 spec 矛盾 | **spec**，同时改 design |
+| 技能建议与项目规范矛盾 | **项目规范** |
+| 旧 spec 与实际代码矛盾 | **代码**，同时补规格 |
+
+只报"这样更好"但不对应任何 Requirement 的审查意见，属于口味问题，可以不改。
+
+## 上下文加载
 
 默认只读 `AGENTS.md` + 目标文件。按需加载，不要一次把 `docs/` 全读进来：
 
-- 第一次改某个领域 → 读对应 `docs/*.md`
+- 第一次改某领域 → 读对应 `docs/*.md`
 - 已有 spec → 只读该 spec 的相关段落
-- 报错 → 只贴失败的那一条，不贴整屏日志
+- 报错 → 只贴失败那一条，不贴整屏日志
 
 ## 什么时候必须停下来问
 

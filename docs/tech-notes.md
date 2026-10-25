@@ -95,7 +95,7 @@
 **组件装不上 / CLI 卡在交互提问**
 现象：`npx shadcn@latest add ...` 会追问覆盖与配置路径，非交互环境直接挂住。
 原因：CLI 面向人类交互，且会改写 `globals.css`。
-做法：直接拉 `https://velora.colorlib.com/r/<name>.json`，把 `files[].content` 原样写进 `files[].path`（本仓库为 `src/components/velora/`），再手动登记 `dependencies`。全部组件只依赖 `@/lib/utils` 与 `motion`。
+做法：用本仓库的 `pnpm velora add <name>`。`scripts/velora.mjs` 直接拉 registry JSON，把 `@/` 别名改写成相对路径写进 `packages/velora/src/`，自动合入关键帧并递归补依赖。全部组件只依赖 `@/lib/utils` 与 `motion`。
 
 **深色模式对 Velora 组件不生效**
 现象：切到深色，组件仍是浅色。
@@ -113,7 +113,8 @@
 做法：`src/lib/utils.ts` 用 `clsx` + `tailwind-merge`，这是 shadcn 的约定入口。
 
 **升级组件**
-做法：重跑 registry 拉取覆盖 `src/components/velora/`；本仓库只允许修编译错误（如 `noUncheckedIndexedAccess` 下的数组下标），修完在这一节记一笔。
+做法：`pnpm velora add --all --force` 重拉覆盖 `packages/velora/src/`；
+本仓库只允许修编译错误（如 `noUncheckedIndexedAccess` 下的数组下标），修完在这一节记一笔。
 
 **例外：需要双语的硬编码文案**
 现象：`animated-sidebar.tsx` 里 `Keep expanded` / `Open navigation` / `Close navigation` 是英文硬编码，页面无法覆盖。

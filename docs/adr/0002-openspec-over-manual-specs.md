@@ -23,7 +23,7 @@
 | `github/spec-kit`（142k） | Python CLI + 严格阶段门，官方自评"heavyweight"；本项目不需要 |
 | **OpenSpec** | 轻量、无阶段门、`openspec/specs` 累积态 + `openspec/changes` 变更集，正好补上第 3 个缺口 |
 
-> 注：`obra/superpowers` 另行引入，但它与 OpenSpec **不竞争**——前者是开发方法论（逼需求→写计划→执行→验证），后者是规格的存档与累积。分工见 `docs/superpowers.md`。
+> 注：`obra/superpowers` 另行引入，但它与 OpenSpec **不竞争**——前者是开发方法论（逼需求→写计划→执行→验证），后者是规格的存档与累积。本项目只保留了其中不产出文档的技能，分工见 `AGENTS.md` §技能。
 
 落地方式：
 
