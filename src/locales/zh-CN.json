@@ -12,6 +12,7 @@
     "label": "主导航",
     "home": "概览",
     "tasks": "任务",
+    "showcase": "组件",
     "settings": "设置",
     "keepExpanded": "保持展开",
     "open": "打开导航",
@@ -109,5 +110,47 @@
     "autostartOff": "已关闭",
     "notifyHint": "调用已发出。若没看到横幅，多半是 macOS 通知里把这个应用设成了「无」。",
     "openNotifySettings": "打开系统通知设置"
+  },
+  "showcase": {
+    "subtitle": "模板内置的组件、区块与已组装页面",
+    "tabs": {
+      "components": "组件",
+      "blocks": "区块",
+      "templates": "页面"
+    },
+    "componentsHint": "精选 {{count}} 个，按功能分组。共享包里另有更多。",
+    "blocksHint": "共 {{count}} 个成品区块，用 pnpm velora add <name> 拉取。",
+    "templatesHint": "应用内已组装好的页面，点击可跳转。",
+    "open": "打开 →",
+    "groups": {
+      "background": "背景",
+      "text": "文字",
+      "button": "按钮",
+      "card": "卡片与布局",
+      "nav": "导航",
+      "form": "表单与输入",
+      "loader": "载入与提示",
+      "scroll": "滚动与效果",
+      "data": "数据与地图",
+      "mockup": "窗口与代码"
+    },
+    "blockGroups": {
+      "hero-sections": "Hero",
+      "feature-sections": "功能区",
+      "pricing-sections": "定价",
+      "testimonial-sections": "用户评价",
+      "cta-sections": "CTA",
+      "logo-clouds": "客户 Logo",
+      "faq-sections": "常见问题",
+      "navbars": "导航栏",
+      "footers": "页脚",
+      "auth-sections": "登录注册"
+    },
+    "pages": {
+      "home": { "label": "概览页", "description": "渐变 Hero、终端实录、能力卡与技术栈 Marquee。" },
+      "tasks": { "label": "任务页", "description": "输入框、列表、勾选完成、删除与空状态。" },
+      "settings": { "label": "设置页", "description": "主题、语言、通知、开机自启，四张卡片纵向排布。" },
+      "app-shell": { "label": "应用外壳", "description": "图标栏悬停展开，窄屏折叠为抽屉，页头带主题切换。" }
+    }
   }
 }

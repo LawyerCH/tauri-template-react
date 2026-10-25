@@ -12,6 +12,7 @@
     "label": "Main navigation",
     "home": "Overview",
     "tasks": "Tasks",
+    "showcase": "Components",
     "settings": "Settings",
     "keepExpanded": "Keep expanded",
     "open": "Open navigation",
@@ -109,5 +110,47 @@
     "autostartOff": "Off",
     "notifyHint": "The call was made. If no banner appears, macOS notifications for this app are probably set to None.",
     "openNotifySettings": "Open notification settings"
+  },
+  "showcase": {
+    "subtitle": "Components, blocks and assembled pages built into this template",
+    "tabs": {
+      "components": "Components",
+      "blocks": "Blocks",
+      "templates": "Pages"
+    },
+    "componentsHint": "{{count}} curated components, grouped by purpose. The shared package has more.",
+    "blocksHint": "{{count}} ready-made blocks. Pull one with pnpm velora add <name>.",
+    "templatesHint": "Pages already assembled in the app. Click to open.",
+    "open": "Open →",
+    "groups": {
+      "background": "Background",
+      "text": "Text",
+      "button": "Buttons",
+      "card": "Cards & layout",
+      "nav": "Navigation",
+      "form": "Forms & input",
+      "loader": "Loaders & feedback",
+      "scroll": "Scroll & effects",
+      "data": "Data & maps",
+      "mockup": "Mockups & code"
+    },
+    "blockGroups": {
+      "hero-sections": "Hero",
+      "feature-sections": "Features",
+      "pricing-sections": "Pricing",
+      "testimonial-sections": "Testimonials",
+      "cta-sections": "CTA",
+      "logo-clouds": "Logo clouds",
+      "faq-sections": "FAQ",
+      "navbars": "Navbars",
+      "footers": "Footers",
+      "auth-sections": "Auth"
+    },
+    "pages": {
+      "home": { "label": "Overview", "description": "Gradient hero, live terminal, capability cards and a stack marquee." },
+      "tasks": { "label": "Tasks", "description": "Input, list, check to complete, delete, empty state." },
+      "settings": { "label": "Settings", "description": "Theme, language, notifications, autostart in four stacked cards." },
+      "app-shell": { "label": "App shell", "description": "Icon rail expands on hover, collapses to a drawer on narrow screens, header has theme switch." }
+    }
   }
 }

@@ -1,17 +1,17 @@
 ## Context
 
-官网当前只有一页（`website/src/pages/index.astro`），内容由 5 个 React 区块组成。共享包 `packages/velora` 里已有 100 个动画组件与 31 个区块，但官网只用了其中 10 个左右。
+桌面应用是可安装的成品，用户第一次打开看到的是侧栏 + 概览页。共享包 `packages/velora` 里有 100 个动画组件与 31 个区块，但应用内目前只用了不到 10 个，其余能力对用户不可见：想用哪个组件得翻源码或去上游官网。
 
-Astro 对 React 组件做 SSR 预渲染，滚到视口才注水（`client:visible`）。展示页需要同时呈现几十个组件的预览，若全部注水，首屏 JS 会失控。
+应用已经把所有组件装在 `packages/velora` 里并随应用打包，展示页不需要额外拉取或注水策略——它就是一个普通的 React Router 路由页。
 
 ## Goals / Non-Goals
 
 **Goals:**
 
-- 一个页面内用标签页切换「组件 / 模块 / 模板」三类
+- 一个页面内用标签页切换「组件 / 区块 / 页面」三类
 - 每类里按功能分组，便于扫读
 - 每个条目给出：名称、分类、缩略预览
-- 首屏 HTML 含全部标题与分类文本（SEO 与无 JS 可读）
+- 从侧栏「组件」进入，路由为 `/#/showcase`
 - 预览动效尊重 `prefers-reduced-motion`
 
 **Non-Goals:**
@@ -21,12 +21,13 @@ Astro 对 React 组件做 SSR 预渲染，滚到视口才注水（`client:visibl
 - 不做搜索与筛选
 - 不引入新的 npm 依赖
 - 不改共享包内任何组件源码
+- 不在官网站点重复做一页（官网已有自己的展示）
 
 ## Decisions
 
 ### 分组数据用静态常量，不扫文件系统
 
-组件清单写在 `website/src/sections/showcase/catalog.ts`，按功能分组手写。
+组件清单写在 `src/features/showcase/catalog.ts`，按功能分组手写。
 
 放弃的方案：构建时读 `packages/velora/src/velora/*.tsx` 自动生成清单。原因：文件名无法反映功能类别，且自动扫描会把未验证的组件也列上去，展示页需要"精选且确认能用"的物品。
 
@@ -40,11 +41,9 @@ Astro 对 React 组件做 SSR 预渲染，滚到视口才注水（`client:visibl
 
 不新写标签页组件。`AnimatedTabs` 已有 WAI-ARIA tabs 语义、方向键支持与 `prefers-reduced-motion` 处理。
 
-### 注水策略
+### 只在激活的标签页挂载预览
 
-- 标签栏与首屏可见的分组：`client:load`
-- 其余标签页内容：`client:visible`
-- 纯文本条目（无预览的组件名）：不加指令，零 JS
+三个面板各自独立，非激活面板不渲染，避免一次挂载几十个带动画的组件。组件清单本身是静态常量，切换标签只做一次 `Array.map`。
 
 ## Risks / Trade-offs
 

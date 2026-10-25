@@ -1,19 +1,22 @@
 /**
- * 展示页的清单是**手写精选**，不是扫文件系统。
+ * 组件目录的清单是**手写精选**，不是扫文件系统。
  * 原因：文件名反映不了功能类别，且自动扫描会把未验证的组件也列上去。
+ *
+ * 本文件只存结构化字段；分组标题、条目标签、页面描述全部走 i18n，
+ * 以保证中英双语一致。
  */
 export interface ShowcaseItem {
   /** 共享包里的组件名，用作 key */
   name: string;
-  /** 展示用短名 */
+  /** 展示用短名（组件专名，中英通用） */
   label: string;
   /** 是否有预览实例；false 表示只列名 */
   preview?: boolean;
 }
 
 export interface ShowcaseGroup {
+  /** 同时作为 i18n key 的最后一段 */
   id: string;
-  title: string;
   items: ShowcaseItem[];
 }
 
@@ -21,7 +24,6 @@ export interface ShowcaseGroup {
 export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   {
     id: "background",
-    title: "背景",
     items: [
       { name: "aurora-background", label: "Aurora", preview: true },
       { name: "grid-pattern", label: "Grid / Dot", preview: true },
@@ -37,7 +39,6 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "text",
-    title: "文字",
     items: [
       { name: "animated-gradient-text", label: "Gradient Text", preview: true },
       { name: "text-shimmer", label: "Text Shimmer", preview: true },
@@ -53,7 +54,6 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "button",
-    title: "按钮",
     items: [
       { name: "shimmer-button", label: "Shimmer", preview: true },
       { name: "moving-border", label: "Moving Border", preview: true },
@@ -66,7 +66,6 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "card",
-    title: "卡片与布局",
     items: [
       { name: "spotlight-card", label: "Spotlight", preview: true },
       { name: "glare-card", label: "Glare" },
@@ -82,7 +81,6 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "nav",
-    title: "导航",
     items: [
       { name: "animated-tabs", label: "Animated Tabs" },
       { name: "animated-sidebar", label: "Sidebar" },
@@ -93,7 +91,6 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "form",
-    title: "表单与输入",
     items: [
       { name: "vanish-input", label: "Vanish Input" },
       { name: "file-drop", label: "File Drop" },
@@ -103,7 +100,6 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "loader",
-    title: "载入与提示",
     items: [
       { name: "loaders", label: "Loaders", preview: true },
       { name: "multi-step-loader", label: "Multi Step" },
@@ -113,7 +109,6 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "scroll",
-    title: "滚动与效果",
     items: [
       { name: "blur-fade", label: "Blur Fade", preview: true },
       { name: "border-beam", label: "Border Beam", preview: true },
@@ -128,16 +123,13 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
   {
     id: "data",
-    title: "数据与地图",
     items: [
       { name: "globe", label: "Globe" },
       { name: "world-map", label: "World Map" },
-      { name: "charts", label: "Charts（recipes）" },
     ],
   },
   {
     id: "mockup",
-    title: "窗口与代码",
     items: [
       { name: "terminal", label: "Terminal", preview: true },
       { name: "code-block", label: "Code Block" },
@@ -147,17 +139,16 @@ export const COMPONENT_GROUPS: ShowcaseGroup[] = [
   },
 ];
 
-/** 模块：31 个成品区块，按上游类别 */
+/** 区块：31 个成品区块，按上游类别 */
 export interface BlockGroup {
+  /** 同时作为 i18n key 的最后一段 */
   id: string;
-  title: string;
   items: string[];
 }
 
 export const BLOCK_GROUPS: BlockGroup[] = [
   {
     id: "hero-sections",
-    title: "Hero",
     items: [
       "hero-aurora",
       "hero-globe",
@@ -169,7 +160,6 @@ export const BLOCK_GROUPS: BlockGroup[] = [
   },
   {
     id: "feature-sections",
-    title: "功能区",
     items: [
       "features-bento",
       "features-icon-grid",
@@ -180,77 +170,60 @@ export const BLOCK_GROUPS: BlockGroup[] = [
   },
   {
     id: "pricing-sections",
-    title: "定价",
     items: ["pricing-three-tiers", "pricing-single-plan", "pricing-comparison"],
   },
   {
     id: "testimonial-sections",
-    title: "用户评价",
     items: ["testimonials-marquee", "testimonials-featured", "testimonials-grid"],
   },
   {
     id: "cta-sections",
-    title: "CTA",
     items: ["cta-vortex", "cta-split-image", "cta-newsletter"],
   },
   {
     id: "logo-clouds",
-    title: "客户 Logo",
     items: ["logos-marquee", "logos-grid"],
   },
   {
     id: "faq-sections",
-    title: "常见问题",
     items: ["faq-accordion", "faq-two-column"],
   },
   {
     id: "navbars",
-    title: "导航栏",
     items: ["navbar-floating", "navbar-mega"],
   },
   {
     id: "footers",
-    title: "页脚",
     items: ["footer-columns", "footer-wordmark", "footer-newsletter"],
   },
   {
     id: "auth-sections",
-    title: "登录注册",
     items: ["auth-login-split", "auth-signup-card"],
   },
 ];
 
-/** 模板：已实际组装的页面 */
+/** 模板：桌面应用内已实际组装的页面 */
 export interface TemplateItem {
+  /** label 与 description 走 i18n：showcase.pages.<name>.* */
   name: string;
-  label: string;
-  description: string;
-  href?: string;
-  /** 无 href 表示应用内页面，不可从官网跳转 */
-  external?: boolean;
+  /** 应用内路由，可点击跳转 */
+  to?: string;
 }
 
 export const TEMPLATES: TemplateItem[] = [
   {
-    name: "landing",
-    label: "产品官网首页",
-    description: "Hero + 数据 + 能力卡 + 快速开始 + 技术栈 + FAQ，Astro 静态预渲染。",
-    href: "/",
+    name: "home",
+    to: "/",
   },
   {
-    name: "showcase",
-    label: "组件目录",
-    description: "当前这一页：按功能分组浏览全部组件与区块。",
-    href: "/showcase",
+    name: "tasks",
+    to: "/tasks",
   },
   {
-    name: "desktop-shell",
-    label: "桌面应用外壳",
-    description: "侧栏导航 + 概览 / 任务 / 设置三页，Tauri 内运行。",
+    name: "settings",
+    to: "/settings",
   },
   {
-    name: "desktop-settings",
-    label: "桌面设置页",
-    description: "主题、语言、通知、开机自启，单项开关即时生效。",
+    name: "app-shell",
   },
 ];

@@ -2,6 +2,7 @@ import { createHashRouter } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
 import { HomePage } from "@/features/home/HomePage";
 import { TasksPage } from "@/features/tasks/TasksPage";
+import { ShowcasePage } from "@/features/showcase/ShowcasePage";
 import { SettingsPage } from "@/features/settings/SettingsPage";
 
 export const router = createHashRouter([
@@ -11,6 +12,7 @@ export const router = createHashRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "tasks", element: <TasksPage /> },
+      { path: "showcase", element: <ShowcasePage /> },
       { path: "settings", element: <SettingsPage /> },
     ],
   },

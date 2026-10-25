@@ -38,7 +38,7 @@
 
 #### Scenario: 模板页指向实际页面
 - **WHEN** 用户查看模板页
-- **THEN** 展示官网站点与桌面端已有的页面，并可点击跳转（官网页面为真实链接，桌面端标注为应用内页面）
+- **THEN** 展示桌面应用内已组装的页面，并可点击跳转
 
 ### Requirement: 首屏可读且省 JS
 
@@ -60,10 +60,10 @@
 - **WHEN** 系统开启 `prefers-reduced-motion: reduce`
 - **THEN** Marquee、Aurora、Shimmer 等循环动画停止，内容仍完整可见
 
-### Requirement: 从首页可达
+### Requirement: 从侧栏可达
 
-首页 SHALL 提供进入展示页的入口。
+侧栏导航 SHALL 提供进入展示页的入口。
 
-#### Scenario: 首页点击入口
-- **WHEN** 用户在官网首页点击「组件目录」相关入口
-- **THEN** 跳转到 `/showcase`
+#### Scenario: 点击侧栏入口
+- **WHEN** 用户点击侧栏「组件」
+- **THEN** 路由跳转到 `/#/showcase`，侧栏该项为选中态
