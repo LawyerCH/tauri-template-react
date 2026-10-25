@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Check, Plus, Trash2 } from "lucide-react";
+import { BlurFade } from "@/components/velora/blur-fade";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 interface Task {
   id: string;
@@ -37,7 +38,7 @@ export function TasksPage() {
 
   return (
     <div className="space-y-6">
-      <p className="max-w-[64ch] text-sm text-ink-2">{t("tasks.subtitle")}</p>
+      <p className="max-w-[64ch] text-sm text-muted-foreground">{t("tasks.subtitle")}</p>
 
       <form
         onSubmit={(event) => {
@@ -51,10 +52,10 @@ export function TasksPage() {
           onChange={(event) => setDraft(event.target.value)}
           placeholder={t("tasks.placeholder")}
           aria-label={t("tasks.placeholder")}
-          className="h-9 min-w-0 flex-1 rounded-sm border border-line bg-paper px-3 text-sm text-ink placeholder:text-ink-3 focus-visible:border-accent"
+          className="h-10 min-w-0 flex-1 rounded-xl border bg-card px-3.5 text-sm transition-shadow outline-none placeholder:text-muted-foreground/70 focus-visible:ring-2 focus-visible:ring-ring/50"
         />
-        <Button type="submit" variant="primary" disabled={!draft.trim()}>
-          <Plus size={14} strokeWidth={1.5} />
+        <Button type="submit" variant="primary" size="md" disabled={!draft.trim()}>
+          <Plus size={15} strokeWidth={1.75} />
           {t("common.add")}
         </Button>
       </form>
@@ -63,45 +64,49 @@ export function TasksPage() {
         <EmptyState title={t("tasks.empty.title")} description={t("tasks.empty.description")} />
       ) : (
         <div>
-          <div className="mb-2 flex items-baseline justify-between text-xs text-ink-3">
-            <span className="tabular">{t("tasks.count", { count: tasks.length })}</span>
-            <span className="tabular">{t("tasks.remaining", { count: remaining })}</span>
+          <div className="mb-3 flex items-baseline justify-between text-xs text-muted-foreground">
+            <span className="font-mono tabular-nums">{t("tasks.count", { count: tasks.length })}</span>
+            <span className="font-mono tabular-nums">{t("tasks.remaining", { count: remaining })}</span>
           </div>
-          <ul className="border-t border-line">
-            {tasks.map((task) => (
-              <li
-                key={task.id}
-                className="group flex items-center gap-3 border-b border-line py-2.5"
-              >
-                <button
-                  type="button"
-                  onClick={() => toggleTask(task.id)}
-                  aria-pressed={task.done}
-                  aria-label={task.title}
-                  className={cn(
-                    "flex size-4 shrink-0 items-center justify-center rounded-sm border",
-                    task.done ? "border-accent bg-accent text-white" : "border-line text-transparent",
-                  )}
-                >
-                  <Check size={11} strokeWidth={2.5} />
-                </button>
-                <span
-                  className={cn(
-                    "min-w-0 flex-1 truncate text-sm",
-                    task.done ? "text-ink-3 line-through" : "text-ink",
-                  )}
-                >
-                  {task.title}
-                </span>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => removeTask(task.id)}
-                  aria-label={`${t("common.delete")} ${task.title}`}
-                  className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
-                >
-                  <Trash2 size={14} strokeWidth={1.5} />
-                </Button>
+
+          <ul className="space-y-2">
+            {tasks.map((task, index) => (
+              <li key={task.id}>
+                <BlurFade delay={Math.min(index * 0.03, 0.2)} offset={8} duration={0.35}>
+                  <div className="group flex items-center gap-3 rounded-xl border bg-card px-3.5 py-2.5 transition-colors hover:border-brand-via/40">
+                    <button
+                      type="button"
+                      onClick={() => toggleTask(task.id)}
+                      aria-pressed={task.done}
+                      aria-label={task.title}
+                      className={cn(
+                        "grid size-4.5 shrink-0 place-items-center rounded-md border transition-colors",
+                        task.done
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border text-transparent hover:border-brand-via/60",
+                      )}
+                    >
+                      <Check size={11} strokeWidth={3} />
+                    </button>
+                    <span
+                      className={cn(
+                        "min-w-0 flex-1 truncate text-sm transition-colors",
+                        task.done ? "text-muted-foreground line-through" : "text-foreground",
+                      )}
+                    >
+                      {task.title}
+                    </span>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => removeTask(task.id)}
+                      aria-label={`${t("common.delete")} ${task.title}`}
+                      className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100"
+                    >
+                      <Trash2 size={14} strokeWidth={1.75} />
+                    </Button>
+                  </div>
+                </BlurFade>
               </li>
             ))}
           </ul>

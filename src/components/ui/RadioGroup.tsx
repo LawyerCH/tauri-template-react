@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 interface RadioOption<T extends string> {
   value: T;
@@ -21,11 +21,11 @@ export function RadioGroup<T extends string>({
   className,
 }: RadioGroupProps<T>) {
   return (
-    <div role="radiogroup" className={cn("flex flex-wrap gap-2", className)}>
+    <div role="radiogroup" className={cn("inline-flex flex-wrap gap-1 rounded-full border bg-muted/50 p-1", className)}>
       {options.map((option) => (
         <label
           key={option.value}
-          className="inline-flex h-8 cursor-pointer items-center gap-2 rounded-sm border border-line bg-paper px-3 text-sm text-ink-2 transition-colors hover:text-ink has-[:checked]:border-accent has-[:checked]:text-ink"
+          className="relative inline-flex h-7 cursor-pointer items-center rounded-full px-3 text-xs text-muted-foreground transition-colors hover:text-foreground has-[:checked]:bg-card has-[:checked]:font-medium has-[:checked]:text-foreground has-[:checked]:shadow-sm"
         >
           <input
             type="radio"
@@ -33,7 +33,7 @@ export function RadioGroup<T extends string>({
             value={option.value}
             checked={option.value === value}
             onChange={() => onChange(option.value)}
-            className="size-3.5 accent-accent"
+            className="sr-only"
           />
           {option.label}
         </label>

@@ -17,7 +17,7 @@
 **Tailwind 4 主题变量在切换时不生效**
 现象：改了 `data-theme`，颜色不变。
 原因：`@theme` 会把变量值固化成字面量，运行时切换拿不到新值。
-做法：用 `@theme inline` 指向 `var(--c-*)`，真实值放在 `tokens.css` 的 `:root` / `[data-theme="dark"]`。
+做法：用 `@theme inline` 指向 `var(--*)` 语义变量，真实值放在 `tokens.css` 的 `:root` / `[data-theme="dark"]`。
 
 ## 前端
 
@@ -41,7 +41,12 @@
 原因：jsdom 没有 Tauri 运行时。
 做法：业务代码用 `isTauri()` 分支；测试只测不依赖 IPC 的纯逻辑与组件。
 
-## 桌面端（M2 起适用）
+## 桌面端（已在 `src-tauri/src/lib.rs` 实现）
+
+**托盘文案只更新一次**
+现象：中 → 英 → 中 来回切，托盘文案卡在第一次切换后的语言。
+原因：用 `OnceLock` 存当前语言，`set` 只生效一次，后续调用被静默忽略。
+做法：改用 `Mutex<&'static str>`，每次写入后再重建菜单。
 
 **Rust 侧文案忘了多语言**
 现象：托盘菜单、原生通知永远是中文。
@@ -67,3 +72,28 @@
 现象：调用插件 API 报 not allowed。
 原因：`capabilities/` 没放行。
 做法：一个场景一个 capability 文件，只加该插件该命令的权限，不整体放开。
+
+## Velora UI（shadcn registry）
+
+**组件装不上 / CLI 卡在交互提问**
+现象：`npx shadcn@latest add ...` 会追问覆盖与配置路径，非交互环境直接挂住。
+原因：CLI 面向人类交互，且会改写 `globals.css`。
+做法：直接拉 `https://velora.colorlib.com/r/<name>.json`，把 `files[].content` 原样写进 `files[].path`（本仓库为 `src/components/velora/`），再手动登记 `dependencies`。全部组件只依赖 `@/lib/utils` 与 `motion`。
+
+**深色模式对 Velora 组件不生效**
+现象：切到深色，组件仍是浅色。
+原因：Velora 用 `.dark` 类 + `dark:` 前缀，本项目用 `[data-theme="dark"]`。
+做法：在 `src/styles/index.css` 声明 `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));`，组件源码零改动。
+
+**组件颜色全是透明 / 默认蓝**
+现象：装进来只有骨架，没有品牌色。
+原因：Velora 读 shadcn 语义变量（`--background` `--primary` `--brand-*`），项目没定义。
+做法：`tokens.css` 提供完整变量，`index.css` 用 `@theme inline` 映射成 `bg-card` / `text-muted-foreground` 等类；品牌斜坡是 `--brand-from/via/to` 三个变量。
+
+**`cn` 覆盖不生效**
+现象：传入的 `className` 压不住组件默认类（如 `rounded-2xl`）。
+原因：只用 `clsx` 拼接，同属性类同时存在，后加载的样式说了算。
+做法：`src/lib/utils.ts` 用 `clsx` + `tailwind-merge`，这是 shadcn 的约定入口。
+
+**升级组件**
+做法：重跑 registry 拉取覆盖 `src/components/velora/`；本仓库只允许修编译错误（如 `noUncheckedIndexedAccess` 下的数组下标），修完在这一节记一笔。

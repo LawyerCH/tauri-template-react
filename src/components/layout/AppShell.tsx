@@ -1,68 +1,127 @@
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { listen } from "@tauri-apps/api/event";
 import { useTranslation } from "react-i18next";
+import { Moon, Sun } from "lucide-react";
 import { NAV_ITEMS, DEFAULT_NAV_ITEM } from "@/app/navigation";
-import { APP_VERSION } from "@/lib/env";
-import { cn } from "@/lib/cn";
+import { Sidebar, SidebarBody, SidebarLink } from "@/components/velora/animated-sidebar";
+import { APP_VERSION, isTauri } from "@/lib/env";
+import { useSettings } from "@/lib/settings/store";
+import { cn } from "@/lib/utils";
+
+const PINNED_KEY = "app.sidebar.pinned";
+
+function readPinned(): boolean {
+  try {
+    return localStorage.getItem(PINNED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
 
 export function AppShell() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const active = NAV_ITEMS.find((item) => item.to === pathname) ?? DEFAULT_NAV_ITEM;
 
+  const theme = useSettings((state) => state.theme);
+  const setTheme = useSettings((state) => state.setTheme);
+  const prefersDark = theme === "dark" || (theme === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+
+  useEffect(() => {
+    if (!isTauri()) return;
+
+    let disposed = false;
+    let unlisten: (() => void) | undefined;
+
+    void listen<string>("navigate", (event) => {
+      if (event.payload) navigate(event.payload);
+    })
+      .then((stop) => {
+        if (disposed) stop();
+        else unlisten = stop;
+      })
+      .catch(() => {
+        // 托盘事件不可用时静默忽略，不影响页面内导航
+      });
+
+    return () => {
+      disposed = true;
+      unlisten?.();
+    };
+  }, [navigate]);
+
   return (
-    <div className="flex h-full">
-      <aside className="flex w-14 shrink-0 flex-col border-r border-line bg-paper md:w-56">
-        <div className="flex h-14 flex-col justify-center px-3 md:px-5">
-          <span className="hidden font-serif text-base text-ink md:block">{t("app.name")}</span>
-          <span className="hidden text-[11px] leading-tight text-ink-3 md:block">
-            {t("app.tagline")}
-          </span>
-          <span className="font-serif text-base text-ink md:hidden">{t("app.name").slice(0, 1)}</span>
-        </div>
-
-        <nav className="flex flex-1 flex-col gap-0.5 px-2 py-3">
-          {NAV_ITEMS.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === "/"}
-                title={t(item.labelKey)}
-                className={({ isActive }) =>
-                  cn(
-                    "flex h-9 items-center gap-2 rounded-sm border-l-2 px-2 text-sm transition-colors md:px-3",
-                    isActive
-                      ? "border-accent text-accent"
-                      : "border-transparent text-ink-2 hover:text-ink",
-                  )
-                }
-              >
-                <Icon size={16} strokeWidth={1.5} className="shrink-0" />
-                <span className="hidden truncate md:inline">{t(item.labelKey)}</span>
-              </NavLink>
-            );
-          })}
-        </nav>
-
-        <div className="border-t border-line px-2 py-3 md:px-5">
-          <span className="tabular hidden text-[11px] text-ink-3 md:block">
-            v{APP_VERSION}
-          </span>
-        </div>
-      </aside>
+    <Sidebar className="h-full bg-background" defaultPinned={readPinned()} onPinnedChange={(next) => {
+      try {
+        localStorage.setItem(PINNED_KEY, next ? "1" : "0");
+      } catch {
+        // 隐私模式下写入失败不影响使用
+      }
+    }}>
+      <SidebarBody
+        label={t("nav.label")}
+        logo={<BrandMark />}
+        title={<span className="text-sm font-medium tracking-tight">{t("app.name")}</span>}
+      >
+        {NAV_ITEMS.map((item) => {
+          const Icon = item.icon;
+          return (
+            <SidebarLink
+              key={item.to}
+              href={`#${item.to}`}
+              icon={<Icon size={18} strokeWidth={1.75} />}
+              label={t(item.labelKey)}
+              active={item.to === active.to}
+            />
+          );
+        })}
+      </SidebarBody>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center border-b border-accent px-6 md:px-8">
-          <h1 className="text-sm font-medium text-ink">{t(active.labelKey)}</h1>
+        <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b bg-background/70 px-5 backdrop-blur-md">
+          <div className="flex min-w-0 items-baseline gap-2">
+            <span className="hidden text-xs text-muted-foreground sm:inline">{t("app.name")}</span>
+            <span className="hidden text-xs text-muted-foreground/50 sm:inline">/</span>
+            <h1 className="truncate text-sm font-medium tracking-tight">{t(active.labelKey)}</h1>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="tabular hidden text-[11px] text-muted-foreground sm:inline">v{APP_VERSION}</span>
+            <button
+              type="button"
+              aria-label={t("common.toggleTheme")}
+              title={t("common.toggleTheme")}
+              onClick={() => setTheme(prefersDark ? "light" : "dark")}
+              className="grid size-8 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:outline-none"
+            >
+              {prefersDark ? <Sun size={16} strokeWidth={1.75} /> : <Moon size={16} strokeWidth={1.75} />}
+            </button>
+          </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-6 py-6 md:px-8">
-          <div className="mx-auto w-full max-w-4xl">
+        <main className="min-w-0 flex-1 overflow-y-auto">
+          <div className="mx-auto w-full max-w-5xl px-5 py-7 md:px-8 md:py-9">
             <Outlet />
           </div>
         </main>
       </div>
-    </div>
+    </Sidebar>
+  );
+}
+
+function BrandMark() {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "grid size-8 place-items-center rounded-lg",
+        "bg-[linear-gradient(135deg,var(--brand-from),var(--brand-via),var(--brand-to))]",
+        "text-[13px] font-medium text-brand-foreground shadow-sm shadow-brand-via/30",
+      )}
+    >
+      T
+    </span>
   );
 }

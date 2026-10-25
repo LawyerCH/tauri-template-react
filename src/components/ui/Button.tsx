@@ -1,19 +1,20 @@
 import type { ButtonHTMLAttributes } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md";
 
 const VARIANTS: Record<Variant, string> = {
-  primary: "bg-accent text-white hover:opacity-90",
-  secondary: "border border-line bg-paper text-ink hover:bg-bg",
-  ghost: "text-ink-2 hover:bg-bg hover:text-ink",
-  danger: "text-ink-2 hover:text-accent",
+  primary:
+    "bg-primary text-primary-foreground shadow-sm shadow-primary/25 hover:bg-primary/90",
+  secondary: "border bg-card text-foreground hover:bg-muted",
+  ghost: "text-muted-foreground hover:bg-muted hover:text-foreground",
+  danger: "text-muted-foreground hover:bg-destructive/10 hover:text-destructive",
 };
 
 const SIZES: Record<Size, string> = {
-  sm: "h-7 px-2 text-xs",
-  md: "h-8 px-3 text-sm",
+  sm: "h-7 gap-1 px-2.5 text-xs",
+  md: "h-9 gap-1.5 px-4 text-sm",
 };
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -26,7 +27,7 @@ export function Button({ variant = "secondary", size = "md", className, ...props
     <button
       type="button"
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-40",
+        "inline-flex items-center justify-center rounded-lg font-medium whitespace-nowrap transition-[background-color,color,border-color,box-shadow] duration-200 outline-none focus-visible:ring-2 focus-visible:ring-ring/60 disabled:pointer-events-none disabled:opacity-40 [&_svg]:shrink-0",
         VARIANTS[variant],
         SIZES[size],
         className,
