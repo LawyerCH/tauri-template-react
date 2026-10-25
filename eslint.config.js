@@ -26,8 +26,18 @@ export default tseslint.config(
     },
   },
   {
-    // registry 原始代码（Velora / shadcn）保留上游写法，不做 Fast Refresh 约束
+    // registry 原始代码（Velora / shadcn）保留上游写法：
+    // 不做 Fast Refresh 约束；上游带 @next/next 的 disable 注释，
+    // 本项目没有该插件，注册成空规则避免 "Definition for rule not found"，
+    // 同时关掉"多余 disable"报告，免得升级上游后满屏警告。
     files: ["packages/velora/src/**/*.{ts,tsx}"],
-    rules: { "react-refresh/only-export-components": "off" },
+    linterOptions: { reportUnusedDisableDirectives: "off" },
+    plugins: {
+      "@next/next": { rules: { "no-img-element": { meta: { schema: [] }, create: () => ({}) } } },
+    },
+    rules: {
+      "react-refresh/only-export-components": "off",
+      "@next/next/no-img-element": "off",
+    },
   },
 );

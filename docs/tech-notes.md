@@ -2,6 +2,23 @@
 
 只记"踩过且会再踩"的坑。新增条目格式：现象 → 原因 → 做法。
 
+## 文档与规范
+
+**AGENTS.md 变成一行 `@AGENTS.md`**
+现象：`wc -l AGENTS.md` 只剩 1 行，内容就是 `@AGENTS.md`；`CLAUDE.md` 软链到它，于是两个文件都变成自引用，项目规范全丢。
+原因：编辑器/工具把"引用文件"的写法（`@file`）直接写进了文件本身，等于让文件引用自己。
+做法：改 `AGENTS.md` 时**不要写入 `@` 开头的引用行**；`CLAUDE.md` 保持软链（`ln -sfn AGENTS.md CLAUDE.md`），不要给它填内容；发现行数骤减立刻 `git show <上一个好提交>:AGENTS.md` 找回。
+
+**新增目录后 ESLint 扫到生成物**
+现象：`pnpm lint` 报 `site/.astro/types.d.ts` 里的 triple-slash 错误。
+原因：ESLint 默认忽略规则不含 Astro 的生成目录。
+做法：`eslint.config.js` 的 `ignores` 加 `**/.astro` 与 `**/dist`。
+
+**拉了带 `@next/next` 注释的上游组件，lint 报「Definition for rule not found」**
+现象：`registry` 组件里有 `eslint-disable @next/next/no-img-element`，本项目没装该插件。
+原因：上游是 Next.js 项目，本项目是 Vite/Astro。
+做法：在 `eslint.config.js` 针对 `packages/velora/src/**` 注册空的 `@next/next` 插件并把 `reportUnusedDisableDirectives` 设为 `off`；不要去改组件源码删注释。
+
 ## 工具链
 
 **TS 6 报 `baseUrl` 已废弃**

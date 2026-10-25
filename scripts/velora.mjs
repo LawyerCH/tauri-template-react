@@ -224,33 +224,64 @@ async function add(names, force) {
   console.log("\n下一步：pnpm install && pnpm check");
 }
 
-async function list(all) {
+async function list(all, category) {
   const index = await veloraIndex();
   for (const type of ["registry:ui", "registry:block"]) {
-    const items = index.items.filter((i) => i.type === type);
+    const items = index.items.filter(
+      (i) => i.type === type && (!category || (i.categories ?? []).includes(category)),
+    );
     const label = type === "registry:ui" ? "组件" : "区块";
-    console.log(`\n${label}（${items.length}）`);
+    const pending = [];
     for (const item of items) {
       const installed = !all && (await exists(join(PKG, "src/velora", `${item.name}.tsx`)));
       const blocks = !all && (await exists(join(PKG, "src/blocks", `${item.name}.tsx`)));
       if (installed || blocks) continue;
-      console.log(`  ${item.name.padEnd(28)} ${item.title}`);
+      pending.push(item);
     }
+    console.log(`\n${label}（${pending.length}/${items.length} 未安装）`);
+    for (const item of pending) console.log(`  ${item.name.padEnd(28)} ${item.title}`);
   }
   if (!all) console.log("\n（已安装的条目已省略，加 --all 查看全部）");
 }
 
+/** 按 --all / --category 展开成待拉取的名字列表 */
+async function selectAll(category) {
+  const index = await veloraIndex();
+  return index.items
+    .filter((item) => !category || (item.categories ?? []).includes(category))
+    .map((item) => item.name);
+}
+
 const [command, ...args] = process.argv.slice(2);
 const force = args.includes("--force");
-const targets = args.filter((a) => !a.startsWith("--"));
+const all = args.includes("--all");
+const categoryIndex = args.indexOf("--category");
+const category = categoryIndex >= 0 ? args[categoryIndex + 1] : undefined;
+const targets = args.filter((a, i) => !a.startsWith("--") && i !== categoryIndex + 1);
+
 try {
   if (command === "add") {
-    if (!targets.length) throw new Error("用法：node scripts/velora.mjs add <name...>");
-    await add(targets, force);
+    const names = all || category ? await selectAll(category) : targets;
+    if (!names.length) {
+      throw new Error("用法：node scripts/velora.mjs add <name... | --all | --category <类别>>");
+    }
+    if (all || category) console.log(`批量拉取 ${names.length} 个条目…`);
+    await add(names, force);
   } else if (command === "list") {
-    await list(args.includes("--all"));
+    await list(all, category);
   } else {
-    console.log("用法：\n  node scripts/velora.mjs add <name...>\n  node scripts/velora.mjs list [--all]");
+    console.log(
+      [
+        "用法：",
+        "  node scripts/velora.mjs add <name...>           拉取指定组件/区块",
+        "  node scripts/velora.mjs add --all               拉取全部",
+        "  node scripts/velora.mjs add --category <类别>   按类别拉取",
+        "  node scripts/velora.mjs list [--all] [--category <类别>]",
+        "",
+        "区块类别：hero-sections feature-sections pricing-sections testimonials",
+        "         cta-sections logo-clouds faq-sections navbars footers auth-sections",
+      ].join("\n"),
+    );
   }
 } catch (error) {
   console.error(`\n✗ ${error.message}`);

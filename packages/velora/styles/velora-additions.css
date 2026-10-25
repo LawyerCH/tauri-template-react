@@ -1,0 +1,29 @@
+/* 由 scripts/velora.mjs 追加，请勿手改 */
+@theme inline {
+  --animate-flicker: flicker 3s steps(1, end) infinite;
+  --animate-meteor: meteor 5s linear infinite;
+  --animate-retro-grid: retro-grid 18s linear infinite;
+  --animate-rainbow: rainbow var(--rainbow-duration, 4s) linear infinite;
+  --animate-ripple: ripple 600ms ease-out forwards;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: var(--flicker-max, 0.45); }
+  50% { opacity: var(--flicker-min, 0.08); }
+}
+
+@keyframes meteor {
+  0% { transform: rotate(var(--meteor-angle, 215deg)) translateX(0); opacity: 1; }
+  70% { opacity: 1; }
+  100% { transform: rotate(var(--meteor-angle, 215deg)) translateX(-600px); opacity: 0; }
+}
+
+@keyframes retro-grid {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes rainbow {
+  from { background-position: 0% 50%; }
+  to { background-position: 200% 50%; }
+}
