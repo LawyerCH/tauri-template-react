@@ -20,8 +20,21 @@
 
 ## 门 2：加载设计方法
 
-优先用全局技能：`design-taste-frontend` → `ui-ux-pro-max` → `frontend-design`。
-组件取自 Velora UI 的 shadcn registry，项目已有令牌与组件时，以本文件为准，技能只补方法，不覆盖令牌。
+技能**只补方法，不覆盖项目令牌与组件**。按下面的分工取用，不要同时铺开：
+
+| 要做的事 | 用哪个 | 入口 |
+|---|---|---|
+| 选风格 / 配色 / 字体搭配 | `ui-ux-pro-max` | `python3 .agents/skills/ui-ux-pro-max/scripts/search.py "<查询>" --design-system` |
+| 查 UX 细节（空态、表单校验、无障碍、动效） | `ui-ux-pro-max` | `--domain ux` / `--domain motion` |
+| 落地实现（组件 API、Tailwind 写法、深色模式） | `ui-styling` | — |
+| 反向查重（页面不想看起来像模板） | `design-taste-frontend` | — |
+
+强制约束：
+
+1. **令牌以本项目为准**。`ui-ux-pro-max` / `design-system` 推荐的色板与字体只作为候选，落地时一律换成本项目的 `--primary` / `--brand-*` / `--font-sans`，不新增字号、颜色、圆角。
+2. **组件取自 `packages/velora`**，不用 `ui-styling` 里的 `npx shadcn@latest add`（会写进 `src/components/ui/`，与现有组件冲突，且在 macOS 大小写不敏感的文件系统上会覆盖自写 `Button.tsx`）。缺组件用 `pnpm velora add <name>`。
+3. **`ui-ux-pro-max` 的 `--persist` 不要用**。它会生成 `design-system/<slug>/MASTER.md`，与 `docs/design.md` 重复；设计决策统一写 `docs/design.md`。
+4. 技能的脚本只用 Python 标准库，不需要装依赖；不要为它 `pip install` 或系统级安装。
 
 ## 门 3：交付前逐条自检
 
@@ -29,7 +42,7 @@
 
 ## 令牌（唯一色源）
 
-值定义在 `src/styles/tokens.css`（`:root` / `[data-theme="dark"]`），通过 `src/styles/index.css` 的 `@theme inline` 映射成 Tailwind 语义类。品牌斜坡是三个变量一起用，不要单独取其中一段。
+值定义在 `packages/velora/styles/tokens.css`（`:root` / `[data-theme="dark"]`），通过 `packages/velora/styles/theme.css` 的 `@theme inline` 映射成 Tailwind 语义类。品牌斜坡是三个变量一起用，不要单独取其中一段。
 
 | 角色 | 浅色 | 深色 | Tailwind |
 |---|---|---|---|

@@ -106,6 +106,16 @@ import { HeroAurora } from "@template/velora/blocks/hero-aurora";
 | 深色模式 | 共享包用 `[data-theme="dark"]`（`@custom-variant dark`），与上游的 `.dark` 类不同，已在 `theme.css` 处理，组件源码零改动 |
 | 改组件源码 | 原则上不改；确需改（如加 i18n prop）在 `docs/tech-notes.md` 记一笔，`--force` 升级时按记录补回 |
 
+## 与 UI/UX 技能的边界
+
+`.agents/skills/` 里的设计技能（`ui-ux-pro-max`、`ui-styling`、`design-system`、`design` 等）会教 `npx shadcn@latest add` 与自建令牌体系，**本项目不采用**：
+
+| 技能建议 | 本项目做法 | 原因 |
+|---|---|---|
+| `npx shadcn@latest add button` | `pnpm velora add <name>` | CLI 写 `src/components/ui/button.tsx`，在 macOS 上会覆盖自写 `Button.tsx`；且会改写全局 CSS |
+| 自建 `design-system/` 令牌 | 用 `packages/velora/styles/tokens.css` | 设计决策只落 `docs/design.md`，避免两套令牌漂移 |
+| 推荐的新色板 / 字体 | 只当候选 | 令牌是唯一色源，改动需走 `docs/ui.md` 的门禁 |
+
 ## 装完必做
 
 ```bash

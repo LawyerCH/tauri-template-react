@@ -77,6 +77,32 @@
 
 一句话咨询不要启动六步流程；但只要你开始改代码，就必须回到对应流程。
 
+## 技能使用规则
+
+项目里装了 11 个技能（`.agents/skills/`），功能有重叠。**最多同时加载 2 个**，按下面分工取，不要全都铺开。
+
+| 场景 | 技能 | 边界 |
+|---|---|---|
+| 功能 / 页面需求拆规格 | `intent-spec` | 只管需求，不碰实现 |
+| 定风格 / 配色 / 字体候选 | `ui-ux-pro-max` | 推荐只作候选，令牌仍用本项目的 |
+| 查 UX 细节（空态、校验、无障碍、动效） | `ui-ux-pro-max` `--domain ux\|motion` | 同上 |
+| 落地实现（组件 API、Tailwind、深色） | `ui-styling` | **不用它的 `npx shadcn` 命令** |
+| 视觉门禁与自检 | `ui-gate` | 本项目三道门，优先级最高 |
+| 目录 / 模块怎么放 | `project-structure` | — |
+| 审查改动、提交发版 | `quality-review` / `release-check` | — |
+| 清理磁盘 | `cleanup-disk` | — |
+
+`banner-design`、`brand`、`design`、`design-system`、`slides` 是通用设计技能，**本项目暂时用不到**（没有海报、品牌手册、幻灯片需求）。真要用时按它们的说明单独加载，别和 `ui-gate` 同时走。
+
+硬约束（技能与项目规范冲突时，一律以项目为准）：
+
+1. **令牌不换**：任何技能推荐的色板、字体、圆角都只当候选，落地用 `packages/velora/styles/tokens.css` 里的变量。
+2. **组件不另装**：不用 `npx shadcn@latest add`，缺组件用 `pnpm velora add <name>`。原因见 `docs/velora.md`。
+3. **设计决策只有一个落点**：写 `docs/design.md`，不用 `ui-ux-pro-max --persist` 生成 `design-system/`。
+4. **不为技能装依赖**：`ui-ux-pro-max` 的脚本只用 Python 标准库。不要 `pip install`，也不要 `npm i -g`。
+
+`ui-ux-pro-max` 的检索是**关键词命中**，不是语义搜索。查不到时换更贴近准则的措辞（例如用 `"form validation error"` 而不是 `"设置面板不好看"`），别拿空结果当"没有建议"。
+
 ## 三条最容易踩的坑
 
 | 坑 | 现象 | 正确做法 |

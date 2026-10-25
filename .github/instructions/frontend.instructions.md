@@ -28,7 +28,8 @@ description: React / TypeScript 前端改动约定
 - 状态：跨重启保留 → settings store；只活一个页面 → `useState`；不为"以后共享"提前上全局 store
 
 ## 样式
-- 只用 `src/styles/tokens.css` 的变量与语义类，不写裸色值
+- 只用 `packages/velora/styles/tokens.css` 的变量与语义类，不写裸色值
+- 动画组件与 shadcn 基础件取自 `@template/velora/*`，不在 `src/` 里重建
 - 不写渐变、阴影；圆角全站统一
 - 正文对比度 ≥ 4.5:1，必须有可见 focus ring，禁止裸 `outline: none`
 - 视觉改动必须覆盖空态 / 加载态 / 错误态，并检查浅色与深色
