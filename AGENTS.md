@@ -68,7 +68,7 @@
 
 | 用户意图 | 典型说法 | 先读 | 技能 |
 |---|---|---|---|
-| 新功能 / 新页面 | "加个 xx 功能" | `docs/workflow.md` | `brainstorming` → `intent-spec` → OpenSpec |
+| 新功能 / 新页面 | "加个 xx 功能" | `docs/workflow.md` | `intent-spec` → OpenSpec `/opsx-explore` → `/opsx-propose` |
 | 改界面 / 调样式 | "这里不好看""换个配色" | `docs/ui.md` | `ui-gate` |
 | 目录 / 模块架构 | "重构一下目录""加个模块" | `docs/architecture.md` | `project-structure` |
 | 用 Velora 组件 | "加个 hero""要个 pricing 区" | `docs/velora.md` | — |
@@ -82,19 +82,20 @@
 
 ## 技能使用规则
 
-项目里装了两类技能（`.agents/skills/` 共 24 个），功能有重叠。**最多同时加载 2 个**，按下面分工取。
+项目里装了两类技能（`.agents/skills/` 共 19 个），功能有重叠。**最多同时加载 2 个**，按下面分工取。
 
-**流程类**（来自 superpowers，详见 `docs/superpowers.md`）：
+**流程类**（superpowers 的子集，详见 `docs/superpowers.md`）：
 
 | 场景 | 技能 |
 |---|---|
-| 需求还不清楚、要摆方案 | `brainstorming` |
-| 把规格拆成可执行任务 | `writing-plans` |
-| 按计划实现 / 大改派子代理 | `executing-plans` / `subagent-driven-development` |
-| 修 bug | `systematic-debugging` |
+| 修 bug / 行为异常 | `systematic-debugging` |
 | 写新逻辑 | `test-driven-development` |
 | 交付前验证 | `verification-before-completion` |
-| 审查与收尾 | `requesting-code-review` / `receiving-code-review` / `finishing-a-development-branch` |
+| 主动请求 / 接收审查 | `requesting-code-review` / `receiving-code-review` |
+| 互不依赖的并行任务 | `dispatching-parallel-agents` |
+| 需要隔离开发 | `using-git-worktrees` |
+
+> superpowers 的 `brainstorming`、`writing-plans`、`executing-plans`、`subagent-driven-development`、`finishing-a-development-branch` **已移除**——它们会写 `docs/superpowers/` 下的设计文档与计划，与 OpenSpec 的 `proposal/design/tasks` 一一重叠。需求与计划一律走 OpenSpec。
 
 **设计类**：
 
@@ -116,7 +117,7 @@
 1. **令牌不换**：任何技能推荐的色板、字体、圆角都只当候选，落地用 `packages/velora/styles/tokens.css` 里的变量。
 2. **组件不另装**：不用 `npx shadcn@latest add`，缺组件用 `pnpm velora add <name>`。原因见 `docs/velora.md`。
 3. **设计决策只有一个落点**：写 `docs/design.md`，不用 `ui-ux-pro-max --persist` 生成 `design-system/`。
-4. **规格只有一个落点**：写 `openspec/`，不用 superpowers 默认的 `docs/superpowers/plans/`——计划写进 `openspec/changes/<name>/tasks.md`。
+4. **规格与计划只有一个落点**：写 `openspec/`。不要引入任何会写 `docs/superpowers/specs|plans/` 的技能。
 5. **不为技能装依赖**：`ui-ux-pro-max` 的脚本只用 Python 标准库。不要 `pip install`，也不要 `npm i -g`。
 
 `ui-ux-pro-max` 的检索是**关键词命中**，不是语义搜索。查不到时换更贴近准则的措辞（例如用 `"form validation error"` 而不是 `"设置面板不好看"`），别拿空结果当"没有建议"。
@@ -146,7 +147,7 @@
 |---|---|
 | `docs/workflow.md` | 任何非琐碎改动开始前 |
 | `docs/openspec.md` | 用 OpenSpec 管需求：命令、格式、何时必须走 |
-| `docs/superpowers.md` | 流程类技能的分工与与 OpenSpec 的边界 |
+| `docs/superpowers.md` | 流程类技能的子集与移除原因 |
 | `docs/architecture.md` | 新增文件、新模块、跨层改动 |
 | `docs/velora.md` | 用/加/升级 Velora 组件与区块 |
 | `docs/ui.md` | 任何视觉/交互改动 |

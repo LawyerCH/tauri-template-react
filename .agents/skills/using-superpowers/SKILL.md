@@ -19,15 +19,15 @@ This is not negotiable. You cannot rationalize your way out of this.
 
 **Invoke relevant or requested skills BEFORE any response or action** — including clarifying questions, exploring the codebase, or checking files. If it turns out wrong for the situation, you don't have to use it.
 
-**Before entering plan mode:** if you haven't already brainstormed, invoke the brainstorming skill first.
+**Before entering plan mode:** if the requirements aren't settled yet, run the OpenSpec explore/propose flow first (`/opsx-explore` or `/opsx-propose`). This repo uses OpenSpec for specs; the Superpowers `brainstorming` and `writing-plans` skills have been removed because they write to `docs/superpowers/` and would duplicate OpenSpec's artifacts.
 
 Then announce "Using [skill] to [purpose]" and follow the skill exactly. If it has a checklist, create a todo per item.
 
 ## Skill Priority
 
-When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Brainstorming and systematic-debugging are Superpowers' most common process skills, but the rule holds for any of them.
+When multiple skills apply, process skills come first — they set the approach, then implementation skills (frontend-design, etc.) carry it out. Systematic-debugging is the most common process skill here, but the rule holds for any of them.
 
-- "Let's build X" → superpowers:brainstorming first, then implementation skills.
+- "Let's build X" → OpenSpec `/opsx-propose` first (this repo's spec flow), then implementation skills.
 - "Fix this bug" → superpowers:systematic-debugging first, then domain skills.
 
 ## Red Flags
