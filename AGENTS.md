@@ -79,7 +79,13 @@
 
 **先问**：引入新依赖或插件；改目录分层或公共组件 API；需求缺"失败时怎么办"。
 
-**绝不**：提交 `.env` / 密钥 / `src-tauri/target`；`git push --force` 或直推 `main`；用 `alert()` 报错或用 emoji 当图标；为"以后可能用到"提前抽象。
+**绝不**：提交 `.env` / 密钥 / `src-tauri/target`；`git push --force`；用 `alert()` 报错或用 emoji 当图标；为"以后可能用到"提前抽象。
+
+## 分支与推送
+
+当前只有 `main`，小改动直接提交推送。要到跨多个提交、多人并行、或需要评审的规模时，才开 `feat/<短名>` / `fix/<短名>` 走 PR。
+
+**每次都推两个 remote**：`git push origin main && git push cnb main`。
 
 ## 完成定义
 

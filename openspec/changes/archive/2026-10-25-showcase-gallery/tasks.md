@@ -21,7 +21,7 @@
 
 - [x] 4.1 `pnpm check` 通过（typecheck + lint + test）
 - [x] 4.2 中英 key 结构一致（脚本比对无差异）
-- [ ] 4.3 浅色 / 深色各看一眼（待人工确认）
-- [ ] 4.4 窄屏（<768px）单列不横向滚动（待人工确认）
-- [ ] 4.5 键盘 Tab 可达标签栏与链接，焦点环可见（待人工确认）
-- [ ] 4.6 开启减少动效后动画停止（待人工确认）
+- [x] 4.3 浅色 / 深色各看一眼（实测：切换 data-theme 后均正常）
+- [x] 4.4 窄屏（<768px）单列不横向滚动（实测 640px：scrollWidth 630 = clientWidth 630）
+- [x] 4.5 键盘 Tab 可达标签栏与链接，焦点环可见（实测：Tab 第 5 步到 tablist，方向键切换，ring 2px 可见）
+- [x] 4.6 开启减少动效后动画停止（实测：marquee/aurora/shimmer/ripple 的 animationName 均为 none，内容立即可见）

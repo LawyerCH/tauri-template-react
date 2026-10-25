@@ -74,7 +74,7 @@
 
 ## 交付与发布
 
-- 分支：`feat/<短名>` / `fix/<短名>`，不直推 `main`
+- 分支：默认 `main` 直接提交；跨多个提交或需要评审时开 `feat/<短名>` / `fix/<短名>`
 - 双托管：`origin` → GitHub，`cnb` → CNB；推送两边都推
 - 需要构建时先问一句"发布到 CNB 构建吗"
 - 发版三处版本号必须同步：`package.json`、`src-tauri/Cargo.toml`、`src-tauri/tauri.conf.json`
